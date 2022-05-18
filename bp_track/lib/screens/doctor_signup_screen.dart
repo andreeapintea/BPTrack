@@ -1,5 +1,6 @@
 import 'package:bp_track/constants.dart';
 import 'package:bp_track/screens/login_screen.dart';
+import 'package:bp_track/utilities/validators.dart';
 import 'package:bp_track/widgets/common/already_have_account.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';
@@ -15,12 +16,15 @@ class DoctorSignUpScreen extends StatefulWidget {
 
 class _DoctorSignUpState extends State<DoctorSignUpScreen> {
   //add controllers here
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Form(
+        key: _formKey,
         child: Container(
           height: size.height,
           width: double.infinity,
@@ -32,10 +36,10 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: const EdgeInsets.symmetric(vertical: 25),
                       child: Text(
-                        "SIGN UP",
+                        "ÎNREGISTRARE",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
@@ -43,20 +47,20 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                       ),
                     ),
                     RoundedInputField(
-                      hintText: "First Name",
+                      hintText: "Nume",
                       onChanged: (value) {},
                     ),
                     RoundedInputField(
-                      hintText: "Last Name",
+                      hintText: "Prenume",
                       onChanged: (value) {},
                     ),
                     RoundedInputField(
-                      hintText: "County",
+                      hintText: "Județ",
                       icon: Icons.location_city,
                       onChanged: (value) {},
                     ),
                     RoundedInputField(
-                      hintText: "Department",
+                      hintText: "Departament",
                       icon: Icons.medical_services,
                       onChanged: (value) {},
                     ),
@@ -67,10 +71,18 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                     ),
                     RoundedPasswordInput(
                       onChanged: (value) {},
+                      hintText: "Parolă",
+                    ),
+                     RoundedPasswordInput(
+                      onChanged: (value) {},
+                      hintText: "Confirmare parolă",
                     ),
                     RoundedButton(
-                      text: "SIGN UP",
-                      press: () {},
+                      text: "ÎNREGISTRARE",
+                      press: () {
+                        if (_formKey.currentState!.validate()) {
+                        }
+                      },
                     ),
                     AlreadyHaveAccountCheck(
                       press: () {
@@ -80,6 +92,7 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                       },
                       login: false,
                     ),
+                    const Padding(padding: EdgeInsets.all(10.0))
                   ],
                 )),
               ],

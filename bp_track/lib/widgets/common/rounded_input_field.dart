@@ -22,7 +22,7 @@ class RoundedInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
         onChanged: onChanged,
         decoration: InputDecoration(
             hintText: hintText,
@@ -33,6 +33,7 @@ class RoundedInputField extends StatelessWidget {
             border: InputBorder.none),
         controller: controller,
         onTap: tap,
+        validator: validator,
       ),
     );
   }

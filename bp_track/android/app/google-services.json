@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "10284944019",
+    "project_id": "bp-track",
+    "storage_bucket": "bp-track.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10284944019:android:072d401da4c2f2916f9b66",
+        "android_client_info": {
+          "package_name": "com.bptrack.bp_track"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10284944019-mi8ac3pg0ns4k0s2ea6n63tmd8s23db8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKcFbXSQmsYnyII9p7VYeY12-LSbCAKFA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10284944019-mi8ac3pg0ns4k0s2ea6n63tmd8s23db8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

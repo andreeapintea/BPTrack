@@ -18,9 +18,9 @@ class AccountTypeBody extends StatelessWidget {
             top: 50,
             child: Column(
              children: [
-               Padding(
-                 padding: const EdgeInsets.symmetric(vertical: 10),
-                 child: Text("PICK ACCOUNT TYPE",
+               const Padding(
+                 padding: EdgeInsets.symmetric(vertical: 10),
+                 child: Text("ALEGE TIPUL CONTULUI",
                  style: TextStyle(
                    color: primary,
                    fontWeight: FontWeight.bold,
@@ -81,7 +81,7 @@ class AccountTypeBody extends StatelessWidget {
                      ),
                  ),
                ),
-               Text("Patient",
+               Text("Pacient",
                style: TextStyle(
                  color: secondaryColor,
                  fontSize: 18,
