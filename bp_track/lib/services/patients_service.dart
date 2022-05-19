@@ -51,7 +51,8 @@ class PatientsService {
           'prenume': prenume,
           'cnp': cnp,
           'dob': dob,
-          'role': "patient"
+          'role': "patient",
+          'phone': phone,
         });
       } on FirebaseException catch (e) {
         showSnackbar(context, e.message!);

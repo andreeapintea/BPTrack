@@ -93,7 +93,9 @@ class _LoginBodyState extends State<LoginScreen> {
                       children: [
                         SignInButton(
                           Buttons.Google,
-                          onPressed: () {},
+                          onPressed: () {
+                            _googleLogin();
+                          },
                           text: "Autentificare cu Google",
                         )
                       ],
@@ -113,5 +115,9 @@ class _LoginBodyState extends State<LoginScreen> {
         email: _emailController.text,
         password: _passwordController.text,
         context: context);
+  }
+
+  void _googleLogin() async {
+    FirebaseAuthMethods(FirebaseAuth.instance).signInWithGoogle(context);
   }
 }

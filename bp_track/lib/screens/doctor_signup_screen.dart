@@ -5,6 +5,7 @@ import 'package:bp_track/widgets/common/already_have_account.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';
 import 'package:bp_track/widgets/common/rounded_password_field.dart';
+import 'package:bp_track/widgets/common/text_field_container.dart';
 import 'package:flutter/material.dart';
 
 class DoctorSignUpScreen extends StatefulWidget {
@@ -16,9 +17,17 @@ class DoctorSignUpScreen extends StatefulWidget {
 
 class _DoctorSignUpState extends State<DoctorSignUpScreen> {
   //add controllers here
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController _email = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  TextEditingController _confirmPassword = TextEditingController();
+  TextEditingController _nume = TextEditingController();
+  TextEditingController _prenume = TextEditingController();
+  TextEditingController _department = TextEditingController();
+  TextEditingController _phone = TextEditingController();
+  var _selectedCounty = counties[0];
+  var _selectedDepartment = departments[0];
 
-  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -49,44 +58,115 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                     RoundedInputField(
                       hintText: "Nume",
                       onChanged: (value) {},
+                      controller: _nume,
+                      validator: validateName,
                     ),
                     RoundedInputField(
                       hintText: "Prenume",
                       onChanged: (value) {},
+                      controller: _prenume,
+                      validator: validateName,
                     ),
-                    RoundedInputField(
-                      hintText: "Județ",
-                      icon: Icons.location_city,
-                      onChanged: (value) {},
+                    // RoundedInputField(
+                    //   hintText: "Județ",
+                    //   icon: Icons.location_city,
+                    //   onChanged: (value) {},
+                    // ),
+                   TextFieldContainer(
+                      child: DropdownButtonFormField(
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedCounty = newValue!;
+                          });
+                        },
+                        value: _selectedCounty,
+                        items: counties.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        decoration: const InputDecoration(
+                            icon: Icon(
+                              Icons.location_city,
+                              color: onPrimaryContainer,
+                            ),
+                            border: InputBorder.none),
+                      ),
                     ),
+                    TextFieldContainer(
+                      child: DropdownButtonFormField(
+                        isExpanded: true,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _selectedDepartment = newValue!;
+                          });
+                        },
+                        value: _selectedDepartment,
+                        items: departments.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        decoration: const InputDecoration(
+                            icon: Icon(
+                              Icons.medical_services,
+                              color: onPrimaryContainer,
+                            ),
+                            border: InputBorder.none),
+                      ),
+                    ),
+                    // RoundedInputField(
+                    //   hintText: "Specialitate",
+                    //   icon: Icons.medical_services,
+                    //   onChanged: (value) {},
+                    //   controller: _department,
+                    // ),
                     RoundedInputField(
-                      hintText: "Departament",
-                      icon: Icons.medical_services,
+                      hintText: "Telefon",
+                      icon: Icons.phone,
                       onChanged: (value) {},
+                      controller: _phone,
+                      validator: validatePhoneNumber,
                     ),
                     RoundedInputField(
                       hintText: "Email",
                       icon: Icons.email,
                       onChanged: (value) {},
+                      controller: _email,
+                      validator: validateEmail,
                     ),
                     RoundedPasswordInput(
                       onChanged: (value) {},
                       hintText: "Parolă",
+                      controller: _password,
+                      validator: validatePassword,
                     ),
-                     RoundedPasswordInput(
+                    RoundedPasswordInput(
                       onChanged: (value) {},
                       hintText: "Confirmare parolă",
+                      controller: _confirmPassword,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Reintroduceți parola";
+                        }
+                        if (value != _password.text) {
+                          return "Parolele nu se potrivesc!";
+                        }
+                        return null;
+                      },
                     ),
                     RoundedButton(
                       text: "ÎNREGISTRARE",
                       press: () {
-                        if (_formKey.currentState!.validate()) {
-                        }
+                        if (_formKey.currentState!.validate()) {}
                       },
                     ),
                     AlreadyHaveAccountCheck(
                       press: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
                           return LoginScreen();
                         }));
                       },
@@ -103,5 +183,3 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
     );
   }
 }
-
-

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "10284944019-9lq3ami3ntv6t1afas6cmio4cmi3ltvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bptrack.bp_track",
+            "certificate_hash": "9069d66ac8cea110622a6dece16b07a92722f8b1"
+          }
+        },
+        {
           "client_id": "10284944019-mi8ac3pg0ns4k0s2ea6n63tmd8s23db8.apps.googleusercontent.com",
           "client_type": 3
         }

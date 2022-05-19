@@ -36,6 +36,20 @@ String? validateName(String? name) {
   }
 }
 
+String? validateDepartment(String? name) {
+  RegExp nameRegExp = RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]');
+
+  if (name == null || name.isEmpty) {
+    return "Introduceți numele";
+  } else if (name.length < 2) {
+    return "Județul nu poate avea doar un caracter!";
+  } else if (nameRegExp.hasMatch(name)) {
+    return "Numele trebuie să conțină doar litere!";
+  } else {
+    return null;
+  }
+}
+
 String? validateCNP(String? cnp) {
   RegExp cnpRegExp = RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%\s-]');
   if (cnp == null || cnp.isEmpty) {

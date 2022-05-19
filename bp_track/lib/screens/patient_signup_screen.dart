@@ -25,7 +25,6 @@ class _PatientSignUpState extends State<PatientSignUpScreen> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
   TextEditingController _confirmPassword = TextEditingController();
-  
 
   @override
   void dispose() {
@@ -135,7 +134,9 @@ class _PatientSignUpState extends State<PatientSignUpScreen> {
                       children: [
                         SignInButton(
                           Buttons.Google,
-                          onPressed: () {},
+                          onPressed: () {
+                            _googleLogin();
+                          },
                           text: "Înregistrare cu Google",
                         )
                       ],
@@ -153,5 +154,10 @@ class _PatientSignUpState extends State<PatientSignUpScreen> {
   void _signUpPatient() async {
     FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmailPatient(
         email: _email.text, password: _password.text, context: context);
+  }
+
+  void _googleLogin() async {
+    print("SUNT AICI");
+    FirebaseAuthMethods(FirebaseAuth.instance).signInWithGoogle(context);
   }
 }
