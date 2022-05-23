@@ -42,6 +42,10 @@ dependencies:
   firebase_core: ^1.17.0
   google_sign_in: ^5.3.1
   fl_chart: ^0.50.6
+  awesome_notifications: ^0.6.21
+  http: ^0.13.4
+  firebase_messaging: ^11.4.0
+  flutter_local_notifications: ^9.5.3+1
 
 dev_dependencies:
   flutter_test:

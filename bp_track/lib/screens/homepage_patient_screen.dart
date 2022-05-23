@@ -1,8 +1,11 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bp_track/constants.dart';
 import 'package:bp_track/models/logged_entry.dart';
 import 'package:bp_track/screens/welcome_screen.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
+import 'package:bp_track/services/medication_service.dart';
 import 'package:bp_track/services/patients_service.dart';
+import 'package:bp_track/utilities/utilities.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +13,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 final _patientsService = PatientsService();
+final _bpService = BPEntriesService();
 
 class PatientHomepage extends StatefulWidget {
   const PatientHomepage({Key? key}) : super(key: key);
@@ -31,6 +35,35 @@ class _PatientHomepageState extends State<PatientHomepage> {
     _systolic.dispose();
     _diastolic.dispose();
     _pulse.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text("Permiteți notificări"),
+                  content: Text("Aplicația vrea să vă trimită notificări"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Nu")),
+                    TextButton(
+                        onPressed: () {
+                          AwesomeNotifications()
+                              .requestPermissionToSendNotifications()
+                              .then((_) => Navigator.pop(context));
+                        },
+                        child: Text("OK"))
+                  ],
+                ));
+      }
+    });
   }
 
   @override
@@ -69,11 +102,8 @@ class _PatientHomepageState extends State<PatientHomepage> {
                 )),
           ),
           StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance
-                  .collection('tracker_entries')
-                  .where("patient_uid",
-                      isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-                  .snapshots(),
+              stream:
+                  _bpService.getEntries(FirebaseAuth.instance.currentUser!.uid),
               builder: (context, snapshot) {
                 List<FlSpot> systolic = [];
                 List<FlSpot> diastolic = [];
@@ -84,17 +114,14 @@ class _PatientHomepageState extends State<PatientHomepage> {
                   // }).toList();
                   snapshot.data?.docs.forEach((doc) {
                     var date = doc.data()["time"].toDate();
-                    if (date.year == DateTime.now().year && date.month == DateTime.now().month)
-                    {
-                      systolic.add(FlSpot(
-                        date.month.toDouble(),
-                        doc.data()["systolic"].toDouble()));
-                        diastolic.add(FlSpot(
-                        date.month.toDouble(),
-                        doc.data()["diastolic"].toDouble()));
-                        pulse.add(FlSpot(
-                        date.month.toDouble(),
-                        doc.data()["pulse"].toDouble()));
+                    if (date.year == DateTime.now().year &&
+                        date.month == DateTime.now().month) {
+                      systolic.add(FlSpot(date.month.toDouble(),
+                          doc.data()["systolic"].toDouble()));
+                      diastolic.add(FlSpot(date.month.toDouble(),
+                          doc.data()["diastolic"].toDouble()));
+                      pulse.add(FlSpot(date.month.toDouble(),
+                          doc.data()["pulse"].toDouble()));
                     }
                   });
                 }
@@ -174,6 +201,7 @@ class _PatientHomepageState extends State<PatientHomepage> {
           ElevatedButton(
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
+                  cancelAllNotifications();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => WelcomeScreen()),
                       (Route<dynamic> route) => false);

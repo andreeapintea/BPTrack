@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bptrack.bp_track">
+
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="bp_track"
         android:name="${applicationName}"

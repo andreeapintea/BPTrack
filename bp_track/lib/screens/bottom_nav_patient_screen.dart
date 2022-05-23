@@ -1,5 +1,10 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bp_track/constants.dart';
 import 'package:bp_track/screens/homepage_patient_screen.dart';
+import 'package:bp_track/screens/logged_entries_patient_screen.dart';
+import 'package:bp_track/screens/medication_list_screen.dart';
+import 'package:bp_track/screens/medication_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 const TextStyle _textStyle = TextStyle(
@@ -10,35 +15,34 @@ const TextStyle _textStyle = TextStyle(
 );
 
 class PatientNavigation extends StatefulWidget {
-  const PatientNavigation({Key? key}) : super(key: key);
+  int currentIndex;
+  String patientUid;
+  PatientNavigation({Key? key, this.currentIndex = 0, required this.patientUid})
+      : super(key: key);
 
   @override
   State<PatientNavigation> createState() => _PatientNavigationState();
 }
 
 class _PatientNavigationState extends State<PatientNavigation> {
-  int _currentIndex = 0;
-  List<Widget> pages = [
-   PatientHomepage(),
-    Text(
-      "Medication",
-      style: _textStyle,
+  late List<Widget> pages = [
+    const PatientHomepage(),
+    MedicationListScreen(
+      patientUid: widget.patientUid,
     ),
-    Text(
-      "History",
-      style: _textStyle,
-    ),
+    LoggedEntriesPatientScreen(),
     Text(
       "Account",
       style: _textStyle,
     ),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: pages[_currentIndex],
+        child: pages[widget.currentIndex],
       ),
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
@@ -46,10 +50,10 @@ class _PatientNavigationState extends State<PatientNavigation> {
         ),
         child: NavigationBar(
           backgroundColor: secondaryContainer,
-          selectedIndex: _currentIndex,
+          selectedIndex: widget.currentIndex,
           onDestinationSelected: (int newIndex) {
             setState(() {
-              _currentIndex = newIndex;
+              widget.currentIndex = newIndex;
             });
           },
           destinations: const [

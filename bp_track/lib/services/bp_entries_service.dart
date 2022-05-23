@@ -17,19 +17,22 @@ class BPEntriesService {
   }) async {
     var category = getBloodPressureCategory(diastolic, systolic);
     try {
-      _firestoreInstance.collection('tracker_entries').add({
+      _firestoreInstance
+          .collection('patients')
+          .doc(_auth.currentUser?.uid)
+          .collection('tracker_entries')
+          .add({
         'diastolic': diastolic,
         'systolic': systolic,
         'pulse': pulse,
         'time': dateTime,
-        'patient_uid': _auth.currentUser?.uid,
         'category': category,
       });
     } on FirebaseException catch (e) {
       showSnackbar(context, e.message!);
     }
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PatientNavigation()));
+     Navigator.push(
+         context, MaterialPageRoute(builder: (context) => PatientNavigation(currentIndex: 0, patientUid: _auth.currentUser!.uid,)));
     showSnackbar(context, "Infomațiile au fost adăugate!");
   }
 
@@ -51,5 +54,13 @@ class BPEntriesService {
     } else {
       return "error";
     }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getEntries(String patientUid) {
+    return _firestoreInstance
+        .collection('patients')
+        .doc(patientUid)
+        .collection('tracker_entries')
+        .snapshots();
   }
 }

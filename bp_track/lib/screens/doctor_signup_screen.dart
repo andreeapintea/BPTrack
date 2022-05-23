@@ -1,12 +1,20 @@
 import 'package:bp_track/constants.dart';
 import 'package:bp_track/screens/login_screen.dart';
+import 'package:bp_track/services/doctors_service.dart';
+import 'package:bp_track/services/firebase_auth_methods.dart';
+import 'package:bp_track/utilities/show_snackbar.dart';
+import 'package:bp_track/utilities/utilities.dart';
 import 'package:bp_track/utilities/validators.dart';
 import 'package:bp_track/widgets/common/already_have_account.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';
 import 'package:bp_track/widgets/common/rounded_password_field.dart';
 import 'package:bp_track/widgets/common/text_field_container.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+
+final _doctorsService = DoctorsService();
 
 class DoctorSignUpScreen extends StatefulWidget {
   const DoctorSignUpScreen({Key? key}) : super(key: key);
@@ -72,7 +80,7 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                     //   icon: Icons.location_city,
                     //   onChanged: (value) {},
                     // ),
-                   TextFieldContainer(
+                    TextFieldContainer(
                       child: DropdownButtonFormField(
                         onChanged: (String? newValue) {
                           setState(() {
@@ -160,7 +168,9 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                     RoundedButton(
                       text: "ÎNREGISTRARE",
                       press: () {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+                          _signUpDoctor();
+                        }
                       },
                     ),
                     AlreadyHaveAccountCheck(
@@ -181,5 +191,25 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
         ),
       ),
     );
+  }
+
+  void _signUpDoctor() async {
+    var ok = await checkDoctorExists(
+        _nume.text, _prenume.text, _selectedDepartment, _selectedCounty);
+    if (ok) {
+      FirebaseAuthMethods(FirebaseAuth.instance).signUpDoctor(
+          email: _email.text, password: _password.text, context: context);
+      var token = await FirebaseMessaging.instance.getToken();
+      _doctorsService.addDoctor(
+          nume: _nume.text,
+          prenume: _prenume.text,
+          county: _selectedCounty,
+          phone: _phone.text,
+          department: _selectedDepartment,
+          token: token,
+          context: context);
+    } else {
+      showSnackbar(context, "Doctorul nu a fost găsit în baza de date!");
+    }
   }
 }

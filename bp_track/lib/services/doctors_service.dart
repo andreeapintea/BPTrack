@@ -1,24 +1,23 @@
-import 'package:bp_track/screens/bottom_nav_patient_screen.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class PatientsService {
+class DoctorsService {
   final _firestoreInstance = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future? getPatient(String uid) async {
+  Future? getDoctor(String uid) async {
     final snapshot = await _firestoreInstance
-        .collection('patients')
+        .collection('doctors')
         .doc(_auth.currentUser?.uid)
         .get();
     return snapshot;
   }
 
-  Future? checkPatientExists(String uid) async {
+  Future? checkDoctorExists(String uid) async {
     final snapshot = await _firestoreInstance
-        .collection('patients')
+        .collection('doctors')
         .doc(_auth.currentUser?.uid)
         .get();
 
@@ -28,38 +27,40 @@ class PatientsService {
       return true;
   }
 
-  void addPatient({
+  void addDoctor({
     required String nume,
     required String prenume,
-    required String cnp,
+    required String county,
     required String phone,
-    required String dob,
+    required String department,
+    required String? token,
     required BuildContext context,
   }) async {
     final snapshot = await _firestoreInstance
-        .collection('patients')
+        .collection('doctors')
         .doc(_auth.currentUser?.uid)
         .get();
 
     if (snapshot == null || !snapshot.exists) {
       try {
         _firestoreInstance
-            .collection('patients')
+            .collection('doctors')
             .doc(_auth.currentUser?.uid)
             .set({
           'nume': nume,
           'prenume': prenume,
-          'cnp': cnp,
-          'dob': dob,
-          'role': "patient",
+          'conty': county,
+          'department': department,
+          'role': "doctor",
           'phone': phone,
+          'token': token,
         });
       } on FirebaseException catch (e) {
         showSnackbar(context, e.message!);
       }
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => PatientNavigation(currentIndex: 0,
-          patientUid: _auth.currentUser!.uid,)));
+      // Navigator.push(context,
+      //     MaterialPageRoute(builder: (context) => PatientNavigation(currentIndex: 0,
+      //     patientUid: _auth.currentUser!.uid,)));
       showSnackbar(context, "Infomațiile au fost adăugate!");
     }
   }

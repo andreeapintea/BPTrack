@@ -23,7 +23,7 @@ String? validatePassword(String? password) {
 }
 
 String? validateName(String? name) {
-  RegExp nameRegExp = RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]');
+  RegExp nameRegExp = RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9]');
 
   if (name == null || name.isEmpty) {
     return "Introduceți numele";
@@ -32,6 +32,17 @@ String? validateName(String? name) {
   } else if (nameRegExp.hasMatch(name)) {
     return "Numele trebuie să conțină doar litere!";
   } else {
+    return null;
+  }
+}
+
+String? validateMedication(String? name) {
+
+  if (name == null || name.isEmpty) {
+    return "Introduceți medicamentul";
+  } else if (name.length < 2) {
+    return "Medicamentul nu poate avea doar un caracter!";
+  }  else {
     return null;
   }
 }

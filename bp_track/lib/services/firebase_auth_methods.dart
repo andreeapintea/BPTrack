@@ -2,6 +2,8 @@ import 'package:bp_track/constants.dart';
 import 'package:bp_track/screens/bottom_nav_patient_screen.dart';
 import 'package:bp_track/screens/login_screen.dart';
 import 'package:bp_track/screens/patient_details_screen.dart';
+import 'package:bp_track/services/doctors_service.dart';
+import 'package:bp_track/services/medication_service.dart';
 import 'package:bp_track/services/patients_service.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final _patientsService = PatientsService();
+final _medicineService = MedicationService();
+final _doctorsService = DoctorsService();
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
@@ -33,6 +37,26 @@ class FirebaseAuthMethods {
     }
   }
 
+  Future<void> signUpDoctor({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        // Navigator.of(context).pushAndRemoveUntil(
+        //     MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
+        //     (Route<dynamic> route) => false);
+
+        //showSnackbar(context, "Contul a fost creat cu succes!");
+      });
+    } on FirebaseAuthException catch (e) {
+      showSnackbar(context, e.message!);
+    }
+  }
+
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -46,18 +70,22 @@ class FirebaseAuthMethods {
         );
         UserCredential userCredential =
             await _auth.signInWithCredential(credential);
-        if (userCredential.user !=null) {
-          if (userCredential.additionalUserInfo!.isNewUser){
+        if (userCredential.user != null) {
+          if (userCredential.additionalUserInfo!.isNewUser) {
             Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
-          (Route<dynamic> route) => false);
-      showSnackbar(context, "Adăugați detaliile");
-          }
-          else {
+                MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
+                (Route<dynamic> route) => false);
+            showSnackbar(context, "Adăugați detaliile");
+          } else {
+            _medicineService.createNotifications(userCredential.user!.uid);
             Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => PatientNavigation()),
-          (Route<dynamic> route) => false);
-      showSnackbar(context, "Autentificat ca pacient");
+                MaterialPageRoute(
+                    builder: (context) => PatientNavigation(
+                          currentIndex: 0,
+                          patientUid: userCredential.user!.uid,
+                        )),
+                (Route<dynamic> route) => false);
+            showSnackbar(context, "Autentificat ca pacient");
           }
         }
       }
@@ -83,8 +111,13 @@ class FirebaseAuthMethods {
     if (_patientExists) {
       // Navigator.push(context,
       //             MaterialPageRoute(builder: (context) => PatientNavigation()));
+      _medicineService.createNotifications(_auth.currentUser!.uid);
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => PatientNavigation()),
+          MaterialPageRoute(
+              builder: (context) => PatientNavigation(
+                    currentIndex: 0,
+                    patientUid: _auth.currentUser!.uid,
+                  )),
           (Route<dynamic> route) => false);
       showSnackbar(context, "Autentificat ca pacient");
     } else {
