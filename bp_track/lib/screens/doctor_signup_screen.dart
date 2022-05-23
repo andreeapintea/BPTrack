@@ -1,4 +1,5 @@
 import 'package:bp_track/constants.dart';
+import 'package:bp_track/screens/bottom_nav_doctor_screen.dart';
 import 'package:bp_track/screens/login_screen.dart';
 import 'package:bp_track/services/doctors_service.dart';
 import 'package:bp_track/services/firebase_auth_methods.dart';
@@ -194,22 +195,34 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
   }
 
   void _signUpDoctor() async {
-    var ok = await checkDoctorExists(
-        _nume.text, _prenume.text, _selectedDepartment, _selectedCounty);
-    if (ok) {
-      FirebaseAuthMethods(FirebaseAuth.instance).signUpDoctor(
-          email: _email.text, password: _password.text, context: context);
-      var token = await FirebaseMessaging.instance.getToken();
-      _doctorsService.addDoctor(
-          nume: _nume.text,
-          prenume: _prenume.text,
-          county: _selectedCounty,
-          phone: _phone.text,
-          department: _selectedDepartment,
-          token: token,
-          context: context);
-    } else {
-      showSnackbar(context, "Doctorul nu a fost găsit în baza de date!");
+    try {
+      var ok = await checkDoctorExists(
+          _nume.text, _prenume.text, _selectedDepartment, _selectedCounty);
+      if (ok) {
+        FirebaseAuthMethods(FirebaseAuth.instance).signUpDoctor(
+            email: _email.text, password: _password.text, context: context).then((value) async{
+              var token = await FirebaseMessaging.instance.getToken();
+        _doctorsService.addDoctor(
+            nume: _nume.text,
+            prenume: _prenume.text,
+            county: _selectedCounty,
+            phone: _phone.text,
+            department: _selectedDepartment,
+            token: token,
+            context: context);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => DoctorNavigation(
+                      doctorUid: FirebaseAuth.instance.currentUser!.uid,
+                    )),
+            (Route<dynamic> route) => false);
+        showSnackbar(context, "Contul a fost creat!");
+            });
+      } else {
+        showSnackbar(context, "Doctorul nu a fost găsit în baza de date!");
+      }
+    } on Exception catch (e) {
+      showSnackbar(context, "Eroare");
     }
   }
 }

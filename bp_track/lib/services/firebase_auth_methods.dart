@@ -1,4 +1,5 @@
 import 'package:bp_track/constants.dart';
+import 'package:bp_track/screens/bottom_nav_doctor_screen.dart';
 import 'package:bp_track/screens/bottom_nav_patient_screen.dart';
 import 'package:bp_track/screens/login_screen.dart';
 import 'package:bp_track/screens/patient_details_screen.dart';
@@ -45,13 +46,7 @@ class FirebaseAuthMethods {
     try {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        // Navigator.of(context).pushAndRemoveUntil(
-        //     MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
-        //     (Route<dynamic> route) => false);
-
-        //showSnackbar(context, "Contul a fost creat cu succes!");
-      });
+          .then((value) {});
     } on FirebaseAuthException catch (e) {
       showSnackbar(context, e.message!);
     }
@@ -106,6 +101,8 @@ class FirebaseAuthMethods {
     }
     bool _patientExists =
         await _patientsService.checkPatientExists(_auth.currentUser!.uid);
+    bool _doctorExists =
+        await _doctorsService.checkDoctorExists(_auth.currentUser!.uid);
     //bool _doctorExists = await _doctorsService.checkDoctorExists(_auth.currentUser!.uid);
     //TODO
     if (_patientExists) {
@@ -120,11 +117,22 @@ class FirebaseAuthMethods {
                   )),
           (Route<dynamic> route) => false);
       showSnackbar(context, "Autentificat ca pacient");
-    } else {
+    } else if (!_patientExists && !_doctorExists) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
           (Route<dynamic> route) => false);
       showSnackbar(context, "Adăugați detaliile");
+    } else if (_doctorExists){
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+              builder: (context) => DoctorNavigation(
+                    doctorUid: _auth.currentUser!.uid,
+                  )),
+          (Route<dynamic> route) => false);
+      showSnackbar(context, "Autentificat ca doctor");
+    }
+    else {
+      showSnackbar(context, "Eroare");
     }
   }
 }

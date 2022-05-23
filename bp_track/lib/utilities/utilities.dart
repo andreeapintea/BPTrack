@@ -78,9 +78,8 @@ Future<bool> checkDoctorExists(
         }
       }
     });
-      return found;
+    return found;
   } on Exception catch (e) {
-    print("OH NO");
     return false;
   }
 }
@@ -99,4 +98,3 @@ Future<List<SearchedDoctor>> getDoctors(
     throw Exception("HOPA");
   }
 }
-

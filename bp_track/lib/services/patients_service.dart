@@ -16,7 +16,7 @@ class PatientsService {
     return snapshot;
   }
 
-  Future? checkPatientExists(String uid) async {
+  Future<bool> checkPatientExists(String uid) async {
     final snapshot = await _firestoreInstance
         .collection('patients')
         .doc(_auth.currentUser?.uid)
@@ -53,6 +53,7 @@ class PatientsService {
           'dob': dob,
           'role': "patient",
           'phone': phone,
+          'doctor_uid': null,
         });
       } on FirebaseException catch (e) {
         showSnackbar(context, e.message!);
