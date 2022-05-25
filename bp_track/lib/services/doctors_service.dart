@@ -27,6 +27,20 @@ class DoctorsService {
       return true;
   }
 
+  void updateDoctorToken({
+    required String token,
+    required BuildContext context,
+    required String doctorUid,
+  }) async {
+    try {
+      _firestoreInstance.collection('doctors').doc(doctorUid).update({
+        'token': token,
+      });
+    } on FirebaseException catch (e) {
+      showSnackbar(context, e.message!);
+    }
+  }
+
   void addDoctor({
     required String nume,
     required String prenume,

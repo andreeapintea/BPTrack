@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bp_track/constants.dart';
+import 'package:bp_track/screens/account_screen_doctor.dart';
 import 'package:bp_track/screens/doctor_homepage.dart';
 import 'package:bp_track/screens/homepage_patient_screen.dart';
 import 'package:bp_track/screens/logged_entries_patient_screen.dart';
@@ -27,15 +28,8 @@ class DoctorNavigation extends StatefulWidget {
 
 class _DoctorNavigationState extends State<DoctorNavigation> {
   late List<Widget> pages = [
-    DoctorHomepageScreen(),
-    Text(
-      "Patients",
-      style: _textStyle,
-    ),
-    Text(
-      "Account",
-      style: _textStyle,
-    ),
+    const DoctorHomepageScreen(),
+    const AccountScreenDoctor(),
   ];
 
 
@@ -46,7 +40,7 @@ class _DoctorNavigationState extends State<DoctorNavigation> {
         child: pages[widget.currentIndex],
       ),
       bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
+        data: const NavigationBarThemeData(
           indicatorColor: onSecondaryColor,
         ),
         child: NavigationBar(
@@ -61,17 +55,12 @@ class _DoctorNavigationState extends State<DoctorNavigation> {
             NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
-              label: "Home",
-            ),
-            NavigationDestination(
-              selectedIcon: Icon(Icons.medication),
-              icon: Icon(Icons.medication_outlined),
-              label: "Patients",
+              label: "Acasă",
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.account_circle),
               icon: Icon(Icons.account_circle_outlined),
-              label: "Account",
+              label: "Cont",
             )
           ],
         ),

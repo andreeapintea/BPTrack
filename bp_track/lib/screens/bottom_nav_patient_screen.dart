@@ -58,22 +58,22 @@ class _PatientNavigationState extends State<PatientNavigation> {
             NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
-              label: "Home",
+              label: "Acasă",
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.medication),
               icon: Icon(Icons.medication_outlined),
-              label: "Medication",
+              label: "Medicamente",
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.history),
               icon: Icon(Icons.history_outlined),
-              label: "History",
+              label: "Istoric valori",
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.account_circle),
               icon: Icon(Icons.account_circle_outlined),
-              label: "Account",
+              label: "Cont",
             )
           ],
         ),

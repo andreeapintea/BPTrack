@@ -12,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-final _patientsService = PatientsService();
 final _bpService = BPEntriesService();
 
 class PatientHomepage extends StatefulWidget {
@@ -23,18 +22,19 @@ class PatientHomepage extends StatefulWidget {
 }
 
 class _PatientHomepageState extends State<PatientHomepage> {
-  TextEditingController _systolic = TextEditingController();
-  TextEditingController _diastolic = TextEditingController();
-  TextEditingController _pulse = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _systolic = TextEditingController();
+  final TextEditingController _diastolic = TextEditingController();
+  final TextEditingController _pulse = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _entriesService = BPEntriesService();
 
   @override
   void dispose() {
-    super.dispose();
     _systolic.dispose();
     _diastolic.dispose();
     _pulse.dispose();
+    super.dispose();
+    
   }
 
   @override
@@ -90,7 +90,7 @@ class _PatientHomepageState extends State<PatientHomepage> {
                       var output = snapshot.data;
                       var prenume = output!["prenume"];
                       return Text(
-                        "Hello\n${prenume}!",
+                        "Bună\n${prenume}!",
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
@@ -116,42 +116,67 @@ class _PatientHomepageState extends State<PatientHomepage> {
                     var date = doc.data()["time"].toDate();
                     if (date.year == DateTime.now().year &&
                         date.month == DateTime.now().month) {
-                      systolic.add(FlSpot(date.month.toDouble(),
+                      systolic.add(FlSpot(date.day.toDouble(),
                           doc.data()["systolic"].toDouble()));
-                      diastolic.add(FlSpot(date.month.toDouble(),
+                      diastolic.add(FlSpot(date.day.toDouble(),
                           doc.data()["diastolic"].toDouble()));
-                      pulse.add(FlSpot(date.month.toDouble(),
-                          doc.data()["pulse"].toDouble()));
+                      pulse.add(FlSpot(
+                          date.day.toDouble(), doc.data()["pulse"].toDouble()));
                     }
                   });
                 }
                 return SizedBox(
-                    width: size.width * 0.8,
-                    height: size.height * 0.3,
-                    child: LineChart(LineChartData(
-                      backgroundColor: surface,
-                      minX: 1,
-                      maxX: 31,
-                      minY: 0,
-                      maxY: 190,
-                      lineBarsData: [
-                        LineChartBarData(
-                          spots: systolic,
-                          color: Colors.red,
-                          isCurved: true,
-                        ),
-                        LineChartBarData(
-                          spots: diastolic,
-                          color: Colors.blue,
-                          isCurved: true,
-                        ),
-                        LineChartBarData(
-                          spots: pulse,
-                          color: Colors.green,
-                          isCurved: true,
-                        )
-                      ],
-                    )));
+                    width: size.width * 0.9,
+                    height: size.height * 0.4,
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LineChart(LineChartData(
+                          backgroundColor: surface,
+                          minX: 1,
+                          maxX: 31,
+                          minY: 0,
+                          maxY: 200,
+                          titlesData: FlTitlesData(
+                            show: true,
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                reservedSize: 24,
+                                interval: 5,
+                              ),
+                            ),
+                            topTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: false,
+                              )
+                            ),
+                            rightTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: false
+                              )
+                            )
+                          ),
+                          lineBarsData: [
+                            LineChartBarData(
+                              spots: systolic,
+                              color: Colors.red,
+                              isCurved: true,
+                            ),
+                            LineChartBarData(
+                              spots: diastolic,
+                              color: Colors.blue,
+                              isCurved: true,
+                            ),
+                            LineChartBarData(
+                              spots: pulse,
+                              color: Colors.green,
+                              isCurved: true,
+                            )
+                          ],
+                        )),
+                      ),
+                    ));
               }),
           Padding(padding: EdgeInsets.all(15)),
           Padding(
@@ -198,17 +223,6 @@ class _PatientHomepageState extends State<PatientHomepage> {
               )
             ]),
           ),
-          ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  cancelAllNotifications();
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => WelcomeScreen()),
-                      (Route<dynamic> route) => false);
-                });
-                showSnackbar(context, "V-ați deconectat cu succes");
-              },
-              child: const Text("LOGOUT")),
         ]),
       ),
       floatingActionButton: FloatingActionButton(
@@ -340,4 +354,6 @@ class _PatientHomepageState extends State<PatientHomepage> {
               ),
             ));
   }
+
+
 }

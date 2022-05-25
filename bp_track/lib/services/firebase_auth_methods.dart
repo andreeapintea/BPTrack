@@ -8,6 +8,7 @@ import 'package:bp_track/services/medication_service.dart';
 import 'package:bp_track/services/patients_service.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -104,7 +105,6 @@ class FirebaseAuthMethods {
     bool _doctorExists =
         await _doctorsService.checkDoctorExists(_auth.currentUser!.uid);
     //bool _doctorExists = await _doctorsService.checkDoctorExists(_auth.currentUser!.uid);
-    //TODO
     if (_patientExists) {
       // Navigator.push(context,
       //             MaterialPageRoute(builder: (context) => PatientNavigation()));
@@ -122,7 +122,13 @@ class FirebaseAuthMethods {
           MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
           (Route<dynamic> route) => false);
       showSnackbar(context, "Adăugați detaliile");
-    } else if (_doctorExists){
+    } else if (_doctorExists) {
+      var token = await FirebaseMessaging.instance.getToken();
+      if (token == null) {
+        token = "";
+      }
+      _doctorsService.updateDoctorToken(
+          token: token, context: context, doctorUid: _auth.currentUser!.uid);
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (context) => DoctorNavigation(
@@ -130,8 +136,7 @@ class FirebaseAuthMethods {
                   )),
           (Route<dynamic> route) => false);
       showSnackbar(context, "Autentificat ca doctor");
-    }
-    else {
+    } else {
       showSnackbar(context, "Eroare");
     }
   }

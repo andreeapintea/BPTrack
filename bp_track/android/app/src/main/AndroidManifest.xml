@@ -2,6 +2,13 @@
     package="com.bptrack.bp_track">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <queries>
+        <!-- If your app makes calls -->
+        <intent>
+          <action android:name="android.intent.action.DIAL" />
+          <data android:scheme="tel" />
+        </intent>
+      </queries>
    <application
         android:label="bp_track"
         android:name="${applicationName}"
@@ -32,5 +39,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="high_importance_channel" />
     </application>
 </manifest>

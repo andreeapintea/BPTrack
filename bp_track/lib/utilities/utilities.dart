@@ -23,7 +23,7 @@ Future<void> createMedsReminder(
         id: id,
         channelKey: 'scheduled_channel',
         title: medicine,
-        body: "Time to take your medicine!",
+        body: "E timpul pentru medicamente!",
         notificationLayout: NotificationLayout.Default,
       ),
       schedule: NotificationAndroidCrontab(

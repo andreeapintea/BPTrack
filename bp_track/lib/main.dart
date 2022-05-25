@@ -6,6 +6,7 @@ import 'package:bp_track/screens/homepage_patient_screen.dart';
 import 'package:bp_track/screens/medication_list_screen.dart';
 import 'package:bp_track/screens/patient_details_screen.dart';
 import 'package:bp_track/services/doctors_service.dart';
+import 'package:bp_track/services/medication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +32,17 @@ Future main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
-    'High Importance Notifications', // title // description
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications.', // title // description
     importance: Importance.high,
   );
-
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('drawable/launch_image');
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,);
 
   /// Create an Android Notification Channel.
   ///
@@ -45,7 +52,6 @@ Future main() async {
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
-
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -53,6 +59,27 @@ Future main() async {
     badge: true,
     sound: true,
   );
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Got a message whilst in the foreground!');
+    print('Message data: ${message.data}');
+
+    if (message.notification != null) {
+      print('Message also contained a notification: ${message.notification!.body}');
+      flutterLocalNotificationsPlugin.show(
+          message.notification.hashCode,
+          message.notification!.title,
+          message.notification!.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+            
+            ),
+          ),
+        );
+    }
+  });
   AwesomeNotifications().initialize(null, [
     NotificationChannel(
       channelKey: 'scheduled_channel',
@@ -74,6 +101,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   final _patientsService = PatientsService();
   final _doctorsService = DoctorsService();
+  final _medicineService = MedicationService();
 
   @override
   Widget build(BuildContext context) {
@@ -94,43 +122,53 @@ class MyApp extends StatelessWidget {
                 ));
               } else if (snapshot.hasData) {
                 return FutureBuilder(
-                  future: checkIsPatient(),
-                  builder: (context, snapshot){
-                if (snapshot.data == true) {
-                  return FutureBuilder(
-                    future: _patientsService
-                        .getPatient(FirebaseAuth.instance.currentUser!.uid),
+                    future: checkIsPatient(),
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(color: primary),
-                        );
-                      } else if (snapshot.hasData) {
-                        return PatientNavigation(
-                          currentIndex: 0,
-                          patientUid: FirebaseAuth.instance.currentUser!.uid,
+                      if (snapshot.data == true) {
+                        return FutureBuilder(
+                          future: _patientsService.getPatient(
+                              FirebaseAuth.instance.currentUser!.uid),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child:
+                                    CircularProgressIndicator(color: primary),
+                              );
+                            } else if (snapshot.hasData) {
+                              cancelAllNotifications();
+                              _medicineService.createNotifications(
+                                  FirebaseAuth.instance.currentUser!.uid);
+                              return PatientNavigation(
+                                currentIndex: 0,
+                                patientUid:
+                                    FirebaseAuth.instance.currentUser!.uid,
+                              );
+                            } else {
+                              return PatientDetailsScreen();
+                            }
+                          },
                         );
                       } else {
-                        return PatientDetailsScreen();
-                      }
-                    },
-                  );
-                } else {
-                  return FutureBuilder(
-                    future: _doctorsService
-                        .getDoctor(FirebaseAuth.instance.currentUser!.uid),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(color: primary),
+                        return FutureBuilder(
+                          future: _doctorsService.getDoctor(
+                              FirebaseAuth.instance.currentUser!.uid),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child:
+                                    CircularProgressIndicator(color: primary),
+                              );
+                            } else {
+                              return DoctorNavigation(
+                                  doctorUid:
+                                      FirebaseAuth.instance.currentUser!.uid);
+                            }
+                          },
                         );
-                      } else {
-                        return DoctorNavigation(
-                            doctorUid: FirebaseAuth.instance.currentUser!.uid);
                       }
-                    },
-                  );
-                }} );
+                    });
               } else if (snapshot.hasError) {
                 return Center(child: Text('Something went wrong!'));
               } else {

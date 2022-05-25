@@ -70,6 +70,10 @@ class _MedicationScreenState extends State<MedicationScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primary,
+        title: widget.isEdit ? Text("Modifică medicament") : Text("Adaugă medicament"),
+      ),
       body: Form(
         key: _formKey,
         child: !widget.isEdit

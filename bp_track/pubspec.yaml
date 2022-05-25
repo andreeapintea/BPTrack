@@ -46,6 +46,12 @@ dependencies:
   http: ^0.13.4
   firebase_messaging: ^11.4.0
   flutter_local_notifications: ^9.5.3+1
+  firebase_in_app_messaging: ^0.6.0+14
+  firebase_analytics: ^9.1.8
+  flutter_initicon: ^2.0.0
+  font_awesome_flutter: ^9.0.0
+  url_launcher: ^6.1.2
+  animated_text_kit: ^4.2.1
 
 dev_dependencies:
   flutter_test:

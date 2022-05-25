@@ -1,5 +1,6 @@
 import 'package:bp_track/constants.dart';
 import 'package:bp_track/screens/medication_screen.dart';
+import 'package:bp_track/screens/medication_screen_doctor.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,9 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class MedicationListScreen extends StatelessWidget {
+class MedicationListDoctorScreen extends StatelessWidget {
   final String patientUid;
-  const MedicationListScreen({Key? key, required this.patientUid})
+  const MedicationListDoctorScreen({Key? key, required this.patientUid})
       : super(key: key);
 
   @override
@@ -18,7 +19,6 @@ class MedicationListScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Medicamente"),
         backgroundColor: primary,
-        automaticallyImplyLeading: false,
       ),
       body: Row(
         children: [
@@ -48,10 +48,10 @@ class MedicationListScreen extends StatelessWidget {
                             onTap: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return MedicationScreen(
+                                return MedicationScreenDoctor(
                                   isEdit: true,
                                   patientUid:
-                                      FirebaseAuth.instance.currentUser!.uid,
+                                      patientUid,
                                   documentId: entry.id,
                                 );
                               }));
@@ -75,9 +75,9 @@ class MedicationListScreen extends StatelessWidget {
         backgroundColor: primary,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return MedicationScreen(
+            return MedicationScreenDoctor(
               isEdit: false,
-              patientUid: FirebaseAuth.instance.currentUser!.uid,
+              patientUid: patientUid,
             );
           }));
         },

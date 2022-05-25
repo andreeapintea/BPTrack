@@ -8,17 +8,18 @@ import 'package:intl/intl.dart';
 
 final _bpService = BPEntriesService();
 
-class LoggedEntriesPatientScreen extends StatelessWidget {
-  const LoggedEntriesPatientScreen({Key? key}) : super(key: key);
+class LoggedEntriesDoctorScreen extends StatelessWidget {
+  String patientUid;
+  LoggedEntriesDoctorScreen({Key? key, required this.patientUid})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         title: const Text("Valori logate"),
         backgroundColor: primary,
-        automaticallyImplyLeading: false,
       ),
       body: Row(
         children: [
@@ -27,8 +28,7 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
             height: double.infinity,
             width: double.infinity,
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream:
-                  _bpService.getEntries(FirebaseAuth.instance.currentUser!.uid),
+              stream: _bpService.getEntries(patientUid),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView(
@@ -57,7 +57,8 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   "Sistolică: ${entry['systolic']} Diastolică: ${entry['diastolic']} Puls: ${entry['pulse']}",
-                                  style: TextStyle(fontSize: 15),
+                                  style:
+                                      TextStyle(fontSize: 15, color: onSurface),
                                 ),
                                 Chip(
                                   label: Text(

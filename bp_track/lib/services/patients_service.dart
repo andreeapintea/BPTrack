@@ -28,6 +28,28 @@ class PatientsService {
       return true;
   }
 
+  void addDoctorToPatient(
+      {required String patientUid,
+      required String doctorUid,
+      required BuildContext context}) async {
+    try {
+      _firestoreInstance.collection('patients').doc(patientUid).update({
+        'doctor_uid': doctorUid,
+      });
+      _firestoreInstance
+          .collection('doctors')
+          .doc(doctorUid)
+          .collection('patients_doctors')
+          .add({
+        'patient_uid': patientUid,
+      });
+    } on FirebaseException catch (e) {
+      showSnackbar(context, e.message!);
+    }
+    Navigator.pop(context);
+    showSnackbar(context, 'Doctorul a fost selectat!');
+  }
+
   void addPatient({
     required String nume,
     required String prenume,
@@ -58,9 +80,13 @@ class PatientsService {
       } on FirebaseException catch (e) {
         showSnackbar(context, e.message!);
       }
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => PatientNavigation(currentIndex: 0,
-          patientUid: _auth.currentUser!.uid,)));
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PatientNavigation(
+                    currentIndex: 0,
+                    patientUid: _auth.currentUser!.uid,
+                  )));
       showSnackbar(context, "Infomațiile au fost adăugate!");
     }
   }
