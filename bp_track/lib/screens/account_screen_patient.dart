@@ -323,9 +323,14 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
                                 return const SelectDoctorScreen();
                               }));
                             },
-                            child: const Text(
+                            child:  Text(
                               "Selectează doctor",
-                              style: TextStyle(color: onPrimary),
+                              style: GoogleFonts.workSans(
+              color: onPrimary,
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              letterSpacing: 1.25,
+            ),
                             ),
                             style: ButtonStyle(
                                 padding: MaterialStateProperty.all<EdgeInsets>(

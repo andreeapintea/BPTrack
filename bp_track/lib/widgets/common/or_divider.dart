@@ -1,5 +1,6 @@
 import 'package:bp_track/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class OrDivider extends StatelessWidget {
   @override
@@ -11,14 +12,16 @@ class OrDivider extends StatelessWidget {
       child: Row(
         children: [
           buildDivider(),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "SAU",
-              style: TextStyle(
+              style: GoogleFonts.workSans(
                 color: primary,
                 fontWeight: FontWeight.bold,
-              ),
+                letterSpacing: 1,
+    
+              )
             ),
           ),
           buildDivider(),

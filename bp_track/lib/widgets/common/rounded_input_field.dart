@@ -1,6 +1,7 @@
 import 'package:bp_track/constants.dart';
 import 'package:bp_track/widgets/common/text_field_container.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String? hintText;
@@ -40,6 +41,7 @@ class RoundedInputField extends StatelessWidget {
         validator: validator,
         enabled: isEditable,
         initialValue: value,
+        style: GoogleFonts.workSans(),
       ),
     );
   }

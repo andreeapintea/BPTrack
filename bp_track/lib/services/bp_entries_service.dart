@@ -95,19 +95,21 @@ class BPEntriesService {
   }
 
   String getBloodPressureCategory(int diastolic, int systolic) {
-    if (systolic < 100 && diastolic < 60) {
-      return "hypo";
-    } else if (systolic < 120 && diastolic < 80) {
+    if (systolic < 120 && diastolic < 80) {
+      return "optimal";
+    } else if ((120 <= systolic && systolic < 130) ||
+        (80 <= diastolic && diastolic < 85)) {
       return "normal";
-    } else if ((119 < systolic && systolic < 130) && diastolic < 80) {
+    } else if ((130 <= systolic && systolic < 140) ||
+        (85 <= diastolic && diastolic < 90)) {
       return "high";
-    } else if ((129 < systolic && systolic < 140) ||
-        (79 < diastolic && diastolic < 90)) {
+    } else if ((140 <= systolic && systolic < 160) ||
+        (90 <= diastolic && diastolic < 100)) {
       return "stage1";
-    } else if ((139 < systolic && systolic < 180) ||
-        (89 < diastolic && diastolic < 120)) {
+    } else if ((160 <= systolic && systolic < 180) ||
+        (100 <= diastolic && diastolic < 110)) {
       return "stage2";
-    } else if (systolic > 179 || diastolic > 119) {
+    } else if (systolic >= 180 || diastolic >= 110) {
       return "stage3";
     } else {
       return "error";

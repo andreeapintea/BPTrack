@@ -110,8 +110,8 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
 }
 
 Color getTileColor(String category) {
-  if (category == "hypo") {
-    return Color(0xFF9dbdd4);
+  if (category == "optimal") {
+    return Color.fromARGB(255, 77, 210, 155);
   }
   if (category == "normal") {
     return Color(0xFF78c1a3);
@@ -132,8 +132,8 @@ Color getTileColor(String category) {
 }
 
 String getTagText(String category) {
-  if (category == "hypo") {
-    return "Hipotensiune";
+  if (category == "optimal") {
+    return "Optimă";
   }
   if (category == "normal") {
     return "Normală";

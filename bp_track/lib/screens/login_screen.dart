@@ -1,5 +1,6 @@
 import 'package:bp_track/constants.dart';
 import 'package:bp_track/screens/account_type_screen.dart';
+import 'package:bp_track/screens/forgot_password_screen.dart';
 import 'package:bp_track/services/firebase_auth_methods.dart';
 import 'package:bp_track/widgets/common/already_have_account.dart';
 import 'package:bp_track/widgets/common/or_divider.dart';
@@ -79,6 +80,29 @@ class _LoginBodyState extends State<LoginScreen> {
                         }
                       },
                     ),
+                    const Padding(padding: EdgeInsets.all(1)),
+                    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: (){
+            Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return const ForgotPasswordScreen();
+                          }),
+                        );
+          },
+          child: Text(
+            "Mi-am uitat parola",
+            style: GoogleFonts.workSans(
+            color: primary,
+          ),
+          ),
+        ),
+      ],
+    ),
+    Padding(padding: EdgeInsets.all(5)),
                     AlreadyHaveAccountCheck(
                       press: () {
                         Navigator.push(

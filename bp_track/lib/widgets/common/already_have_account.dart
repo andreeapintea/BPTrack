@@ -1,5 +1,6 @@
 import 'package:bp_track/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AlreadyHaveAccountCheck extends StatelessWidget {
   final bool login;
@@ -17,16 +18,18 @@ class AlreadyHaveAccountCheck extends StatelessWidget {
       children: [
         Text(
           login ? "Nu ai cont? " : "Ai deja un cont? ",
-          style: TextStyle(color: primary),
+          style: GoogleFonts.workSans(
+            color: primary,
+          ),
         ),
         GestureDetector(
           onTap: press,
           child: Text(
             login ? "Înregistrare" : "Autentificare",
-            style: TextStyle(
-              color: primary,
-              fontWeight: FontWeight.bold,
-            ),
+            style: GoogleFonts.workSans(
+            color: primary,
+            fontWeight: FontWeight.bold,
+          ),
           ),
         ),
       ],

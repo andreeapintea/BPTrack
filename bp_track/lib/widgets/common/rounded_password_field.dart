@@ -1,5 +1,6 @@
 import 'package:bp_track/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'text_field_container.dart';
 
@@ -30,6 +31,7 @@ class RoundedPasswordInput extends StatelessWidget {
         onTap: tap,
         autocorrect: false,
         enableSuggestions: false,
+        style: GoogleFonts.workSans(),
       ),
     );
   }

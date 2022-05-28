@@ -111,30 +111,30 @@ class LoggedEntriesDoctorScreen extends StatelessWidget {
 }
 
 Color getTileColor(String category) {
-  if (category == "hypo") {
-    return Color(0xFF9dbdd4);
+  if (category == "optimal") {
+    return  const Color.fromARGB(255, 77, 210, 155);
   }
   if (category == "normal") {
-    return Color(0xFF78c1a3);
+    return const Color(0xFF78c1a3);
   }
   if (category == "high") {
-    return Color(0xFFc1cbb1);
+    return const Color(0xFFc1cbb1);
   }
   if (category == "stage1") {
-    return Color(0xFFffdbc2);
+    return const Color(0xFFffdbc2);
   }
   if (category == "stage2") {
-    return Color(0xFFf2b4a3);
+    return const Color(0xFFf2b4a3);
   }
   if (category == "stage3") {
-    return Color(0xFFf38989);
+    return const Color(0xFFf38989);
   }
   return Colors.white;
 }
 
 String getTagText(String category) {
-  if (category == "hypo") {
-    return "Hipotensiune";
+  if (category == "optimal") {
+    return "Optimă";
   }
   if (category == "normal") {
     return "Normală";

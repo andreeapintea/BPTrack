@@ -53,6 +53,18 @@ class FirebaseAuthMethods {
     }
   }
 
+  Future<void> resetPassword({
+    required String email,
+    required BuildContext context,
+  }) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      showSnackbar(context, e.message!);
+    }
+    showSnackbar(context, "Un email de restare a fost trimis!");
+  }
+
   Future<void> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
