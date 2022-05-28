@@ -119,13 +119,13 @@ class _AccountScreenDoctorState extends State<AccountScreenDoctor> {
               ),
               const Spacer(),
               Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       width: size.width * 0.8,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         child: TextButton(
-          onPressed: ()async {
-            _doctorService.updateDoctorToken(
+          onPressed: () async {
+            await _doctorService.updateDoctorToken(
         token: "",
         context: context,
         doctorUid: FirebaseAuth.instance.currentUser!.uid);
@@ -147,7 +147,7 @@ class _AccountScreenDoctorState extends State<AccountScreenDoctor> {
           ),
           style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
+                  const EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
               backgroundColor: MaterialStateProperty.all<Color>(primary)),
         ),
       ),

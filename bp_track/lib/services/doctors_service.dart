@@ -27,7 +27,7 @@ class DoctorsService {
       return true;
   }
 
-  void updateDoctorToken({
+  updateDoctorToken({
     required String token,
     required BuildContext context,
     required String doctorUid,
@@ -38,7 +38,9 @@ class DoctorsService {
       });
     } on FirebaseException catch (e) {
       showSnackbar(context, e.message!);
+      return false;
     }
+    return true;
   }
 
   void addDoctor({

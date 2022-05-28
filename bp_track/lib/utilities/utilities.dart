@@ -60,20 +60,20 @@ Future<bool> checkDoctorExists(
     bool found = false;
     doctors.forEach((element) {
       if (element != null && element.specializare != null) {
-        var eNume = element.nume!
-            .replaceAll('Ă', 'A')
-            .replaceAll('Â', 'A')
-            .replaceAll('Î', 'I')
-            .replaceAll('Ș', 'S')
-            .replaceAll('Ț', 'T');
-        var ePrenume = element.prenume!
-            .replaceAll('Ă', 'A')
-            .replaceAll('Â', 'A')
-            .replaceAll('Î', 'I')
-            .replaceAll('Ș', 'S')
-            .replaceAll('Ț', 'T');
-        if (eNume == nume.toUpperCase() &&
-            ePrenume == prenume.toUpperCase() &&
+        // var eNume = element.nume!
+        //     .replaceAll('Ă', 'A')
+        //     .replaceAll('Â', 'A')
+        //     .replaceAll('Î', 'I')
+        //     .replaceAll('Ș', 'S')
+        //     .replaceAll('Ț', 'T');
+        // var ePrenume = element.prenume!
+        //     .replaceAll('Ă', 'A')
+        //     .replaceAll('Â', 'A')
+        //     .replaceAll('Î', 'I')
+        //     .replaceAll('Ș', 'S')
+        //     .replaceAll('Ț', 'T');
+        if (element.nume == nume.toUpperCase() &&
+            element.prenume == prenume.toUpperCase() &&
             element.county == county &&
             element.specializare != null) {
           bool dep = false;

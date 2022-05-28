@@ -39,7 +39,7 @@ Future main() async {
   );
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('drawable/launch_image');
+      AndroidInitializationSettings('mipmap/notification_icon');
   final InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
   );

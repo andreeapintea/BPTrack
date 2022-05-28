@@ -335,7 +335,7 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
                             ),
                             style: ButtonStyle(
                                 padding: MaterialStateProperty.all<EdgeInsets>(
-                                    EdgeInsets.symmetric(
+                                    const EdgeInsets.symmetric(
                                         vertical: 20, horizontal: 40)),
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(primary)),
@@ -369,7 +369,7 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
                           ),
                           style: ButtonStyle(
                               padding: MaterialStateProperty.all<EdgeInsets>(
-                                  EdgeInsets.symmetric(
+                                  const EdgeInsets.symmetric(
                                       vertical: 20, horizontal: 40)),
                               backgroundColor:
                                   MaterialStateProperty.all<Color>(primary)),
