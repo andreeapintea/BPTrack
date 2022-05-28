@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 String? validateEmail(String? email) {
   if (email == null || email.isEmpty) {
-    print("AICI");
     return "Te rog introdu o adresă validă de email!";
   }
   if (!EmailValidator.validate(email)) return "Adresa de email nu este validă!";

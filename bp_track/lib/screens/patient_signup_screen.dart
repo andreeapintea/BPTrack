@@ -160,7 +160,6 @@ class _PatientSignUpState extends State<PatientSignUpScreen> {
   }
 
   void _googleLogin() async {
-    print("SUNT AICI");
     FirebaseAuthMethods(FirebaseAuth.instance).signInWithGoogle(context);
   }
 }

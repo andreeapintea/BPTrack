@@ -26,10 +26,8 @@ int createUniqueId() {
 Future<void> createMedsReminder(
     String medicine, List days, String time, int id) async {
   String daysString = days.join(',');
-  print(daysString);
   var split = time.split(':');
   String cronExpression = "0 ${split[1]} ${split[0]} ? * ${daysString}";
-  print(cronExpression);
   await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: id,

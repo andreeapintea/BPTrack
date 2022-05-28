@@ -16,7 +16,6 @@ class SearchedDoctor {
 
   factory SearchedDoctor.fromJson(Map<String, dynamic> parsedJson) {
     var list = parsedJson['specialitati'] as List;
-    print(list);
     List<Specialitati> spec = list.map(((e) => Specialitati.fromJson(e))).toList();
     return SearchedDoctor(
         nume: parsedJson['nume'],

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style name="SplashActivity" parent="Theme.AppCompat.NoActionBar">      
+    <!-- Point 3-->    
+    <item name="android:windowSplashScreenBackground">#E47068</item>      
+    <!-- Point 2-->
+     <item name="android:windowSplashScreenIconBackgroundColor">
+        #E47068</item>      
+    <!-- Point 1-->
+    <item name="android:windowSplashScreenAnimatedIcon">@drawable/launch_image</item>
+    <!-- Point 4-->
+</style>

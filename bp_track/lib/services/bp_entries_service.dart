@@ -150,9 +150,7 @@ class BPEntriesService {
           },
         ),
       );
-      //print('done');
     } catch (e) {
-      //print("error push notification");
     }
   }
 
