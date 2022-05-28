@@ -1,4 +1,4 @@
-import 'package:bp_track/constants.dart';
+import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/screens/account_type_screen.dart';
 import 'package:bp_track/screens/forgot_password_screen.dart';
 import 'package:bp_track/services/firebase_auth_methods.dart';

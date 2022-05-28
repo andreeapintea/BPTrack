@@ -1,8 +1,8 @@
-import 'package:bp_track/constants.dart';
-import 'package:bp_track/screens/bottom_nav_doctor_screen.dart';
-import 'package:bp_track/screens/bottom_nav_patient_screen.dart';
+import 'package:bp_track/utilities/constants.dart';
+import 'package:bp_track/screens/doctor/bottom_nav_doctor_screen.dart';
+import 'package:bp_track/screens/patient/bottom_nav_patient_screen.dart';
 import 'package:bp_track/screens/login_screen.dart';
-import 'package:bp_track/screens/patient_details_screen.dart';
+import 'package:bp_track/screens/patient/patient_details_screen.dart';
 import 'package:bp_track/services/doctors_service.dart';
 import 'package:bp_track/services/medication_service.dart';
 import 'package:bp_track/services/patients_service.dart';

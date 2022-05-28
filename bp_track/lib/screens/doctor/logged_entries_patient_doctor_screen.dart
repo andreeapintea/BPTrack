@@ -1,4 +1,4 @@
-import 'package:bp_track/constants.dart';
+import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,14 +9,16 @@ import 'package:intl/intl.dart';
 
 final _bpService = BPEntriesService();
 
-class LoggedEntriesPatientScreen extends StatelessWidget {
-  const LoggedEntriesPatientScreen({Key? key}) : super(key: key);
+class LoggedEntriesDoctorScreen extends StatelessWidget {
+  String patientUid;
+  LoggedEntriesDoctorScreen({Key? key, required this.patientUid})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         title: Text("Valori logate",
         style: GoogleFonts.montserrat(
           fontWeight: FontWeight.w500,
@@ -24,7 +26,6 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
           letterSpacing: 0.15,
         ),),
         backgroundColor: primary,
-        automaticallyImplyLeading: false,
       ),
       body: Row(
         children: [
@@ -33,8 +34,7 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
             height: double.infinity,
             width: double.infinity,
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream:
-                  _bpService.getEntries(FirebaseAuth.instance.currentUser!.uid),
+              stream: _bpService.getEntries(patientUid),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView(
@@ -53,7 +53,7 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
                             title: Text(
                               "${formattedDay}.${formattedMonth}.${dt.year} ${formattedHour}:${formattedMinute}",
                               style: GoogleFonts.workSans(
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 17,
                                 letterSpacing: 0.5,
                               ),
@@ -66,7 +66,8 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   "Sistolică: ${entry['systolic']} Diastolică: ${entry['diastolic']} Puls: ${entry['pulse']}",
-                                  style: GoogleFonts.workSans(
+                                  style:
+                                      GoogleFonts.workSans(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 15,
                                     letterSpacing: 0.25,
@@ -111,22 +112,22 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
 
 Color getTileColor(String category) {
   if (category == "optimal") {
-    return Color.fromARGB(255, 77, 210, 155);
+    return  const Color.fromARGB(255, 77, 210, 155);
   }
   if (category == "normal") {
-    return Color(0xFF78c1a3);
+    return const Color(0xFF78c1a3);
   }
   if (category == "high") {
-    return Color(0xFFc1cbb1);
+    return const Color(0xFFc1cbb1);
   }
   if (category == "stage1") {
-    return Color(0xFFffdbc2);
+    return const Color(0xFFffdbc2);
   }
   if (category == "stage2") {
-    return Color(0xFFf2b4a3);
+    return const Color(0xFFf2b4a3);
   }
   if (category == "stage3") {
-    return Color(0xFFf38989);
+    return const Color(0xFFf38989);
   }
   return Colors.white;
 }

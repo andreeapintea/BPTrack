@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:bp_track/screens/bottom_nav_patient_screen.dart';
+import 'package:bp_track/screens/patient/bottom_nav_patient_screen.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

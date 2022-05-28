@@ -1,5 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:bp_track/constants.dart';
+import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/models/logged_entry.dart';
 import 'package:bp_track/screens/welcome_screen.dart';
 import 'package:bp_track/services/bp_entries_service.dart';

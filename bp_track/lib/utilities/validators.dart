@@ -1,5 +1,4 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
 
 String? validateEmail(String? email) {
   if (email == null || email.isEmpty) {

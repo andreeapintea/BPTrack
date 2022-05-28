@@ -1,5 +1,5 @@
-import 'package:bp_track/constants.dart';
-import 'package:bp_track/screens/medication_screen.dart';
+import 'package:bp_track/utilities/constants.dart';
+import 'package:bp_track/screens/patient/medication_screen.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

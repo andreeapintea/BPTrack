@@ -1,7 +1,7 @@
-import 'package:bp_track/constants.dart';
+import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/screens/account_type_screen.dart';
 import 'package:bp_track/screens/login_screen.dart';
-import 'package:bp_track/screens/patient_signup_screen.dart';
+import 'package:bp_track/screens/patient/patient_signup_screen.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:flutter/material.dart';
 

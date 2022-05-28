@@ -1,5 +1,5 @@
-import 'package:bp_track/constants.dart';
-import 'package:bp_track/screens/bottom_nav_doctor_screen.dart';
+import 'package:bp_track/utilities/constants.dart';
+import 'package:bp_track/screens/doctor/bottom_nav_doctor_screen.dart';
 import 'package:bp_track/screens/login_screen.dart';
 import 'package:bp_track/services/doctors_service.dart';
 import 'package:bp_track/services/firebase_auth_methods.dart';

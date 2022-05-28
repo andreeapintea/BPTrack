@@ -1,6 +1,6 @@
-import 'package:bp_track/constants.dart';
-import 'package:bp_track/screens/doctor_signup_screen.dart';
-import 'package:bp_track/screens/patient_signup_screen.dart';
+import 'package:bp_track/utilities/constants.dart';
+import 'package:bp_track/screens/doctor/doctor_signup_screen.dart';
+import 'package:bp_track/screens/patient/patient_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';

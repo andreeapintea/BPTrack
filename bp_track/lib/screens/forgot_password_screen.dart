@@ -1,4 +1,4 @@
-import 'package:bp_track/constants.dart';
+import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/services/firebase_auth_methods.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';

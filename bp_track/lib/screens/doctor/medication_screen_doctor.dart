@@ -1,4 +1,4 @@
-import 'package:bp_track/constants.dart';
+import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/screens/login_screen.dart';
 import 'package:bp_track/services/firebase_auth_methods.dart';
 import 'package:bp_track/services/medication_service.dart';

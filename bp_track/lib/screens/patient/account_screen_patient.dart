@@ -1,8 +1,9 @@
 import 'dart:io';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bp_track/constants.dart';
-import 'package:bp_track/screens/select_doctor_screen.dart';
+import 'package:bp_track/utilities/constants.dart';
+import 'package:bp_track/screens/patient/select_doctor_screen.dart';
+import 'package:bp_track/screens/patient/select_doctor_screen.dart';
 import 'package:bp_track/screens/welcome_screen.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
 import 'package:bp_track/services/patients_service.dart';
