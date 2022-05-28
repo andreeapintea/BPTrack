@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class MedicationListScreen extends StatelessWidget {
@@ -16,7 +17,13 @@ class MedicationListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Medicamente"),
+        title: Text("Medicamente",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),
+        ),
         backgroundColor: primary,
         automaticallyImplyLeading: false,
       ),
@@ -31,6 +38,7 @@ class MedicationListScreen extends StatelessWidget {
                   .collection('patients')
                   .doc(patientUid)
                   .collection('medication')
+                  .orderBy('medication')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -42,8 +50,11 @@ class MedicationListScreen extends StatelessWidget {
                           child: ListTile(
                             title: Text(
                               entry['medication'],
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              style: GoogleFonts.workSans(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17,
+                                letterSpacing: 0.5,
+                              ),
                             ),
                             onTap: () {
                               Navigator.push(context,

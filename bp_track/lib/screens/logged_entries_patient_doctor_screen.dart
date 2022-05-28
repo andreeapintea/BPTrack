@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 final _bpService = BPEntriesService();
@@ -18,7 +19,12 @@ class LoggedEntriesDoctorScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Valori logate"),
+        title: Text("Valori logate",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),),
         backgroundColor: primary,
       ),
       body: Row(
@@ -46,8 +52,11 @@ class LoggedEntriesDoctorScreen extends StatelessWidget {
                           child: ListTile(
                             title: Text(
                               "${formattedDay}.${formattedMonth}.${dt.year} ${formattedHour}:${formattedMinute}",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                              style: GoogleFonts.workSans(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17,
+                                letterSpacing: 0.5,
+                              ),
                             ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,13 +67,21 @@ class LoggedEntriesDoctorScreen extends StatelessWidget {
                                 Text(
                                   "Sistolică: ${entry['systolic']} Diastolică: ${entry['diastolic']} Puls: ${entry['pulse']}",
                                   style:
-                                      TextStyle(fontSize: 15, color: onSurface),
+                                      GoogleFonts.workSans(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 15,
+                                    letterSpacing: 0.25,
+                                    color: onSurface,
+                                  ),
                                 ),
                                 Chip(
                                   label: Text(
                                     tagText,
-                                    style: TextStyle(
+                                    style: GoogleFonts.workSans(
                                       color: onSurface,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 13,
+                                      letterSpacing: 0.4,
                                     ),
                                   ),
                                   backgroundColor: tileColor,

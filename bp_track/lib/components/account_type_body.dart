@@ -3,6 +3,7 @@ import 'package:bp_track/screens/doctor_signup_screen.dart';
 import 'package:bp_track/screens/patient_signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AccountTypeBody extends StatelessWidget {
   @override
@@ -18,14 +19,15 @@ class AccountTypeBody extends StatelessWidget {
             top: 50,
             child: Column(
              children: [
-               const Padding(
-                 padding: EdgeInsets.symmetric(vertical: 10),
+               Padding(
+                 padding: const EdgeInsets.symmetric(vertical: 10),
                  child: Text("ALEGE TIPUL CONTULUI",
-                 style: TextStyle(
-                   color: primary,
-                   fontWeight: FontWeight.bold,
-                   fontSize: 20
-                 ),),
+                 style: GoogleFonts.montserrat(
+                                color: primary,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 24,
+                                letterSpacing: 0,
+                              ),),
                ),
                Padding(
                  padding: EdgeInsets.symmetric(vertical: 20),
@@ -52,11 +54,12 @@ class AccountTypeBody extends StatelessWidget {
                  ),
                ),
                Text("Doctor",
-               style: TextStyle(
+               style: GoogleFonts.workSans(
                  color: secondaryColor,
-                 fontSize: 18,
-                 fontWeight: FontWeight.bold,
-               ),),
+                 fontWeight: FontWeight.normal,
+                 fontSize: 17,
+                 letterSpacing: 0.5,
+               )),
                Padding(
                  padding: EdgeInsets.symmetric(vertical: 20),
                  child: SizedBox(
@@ -82,11 +85,12 @@ class AccountTypeBody extends StatelessWidget {
                  ),
                ),
                Text("Pacient",
-               style: TextStyle(
+               style:GoogleFonts.workSans(
                  color: secondaryColor,
-                 fontSize: 18,
-                 fontWeight: FontWeight.bold,
-               ),
+                 fontWeight: FontWeight.normal,
+                 fontSize: 17,
+                 letterSpacing: 0.5,
+               )
                ),
              ],
           ),

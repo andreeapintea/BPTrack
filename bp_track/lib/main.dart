@@ -16,6 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:bp_track/services/patients_service.dart';
 import 'package:bp_track/utilities/utilities.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:open_file/open_file.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -33,7 +34,8 @@ Future main() async {
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications',
-    description: 'This channel is used for important notifications.', // title // description
+    description:
+        'This channel is used for important notifications.', // title // description
     importance: Importance.high,
   );
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -42,7 +44,12 @@ Future main() async {
   final InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
   );
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+      onSelectNotification: (String? payload) {
+    if (payload != null) {
+      OpenFile.open(payload);
+    }
+  });
 
   /// Create an Android Notification Channel.
   ///
@@ -52,6 +59,7 @@ Future main() async {
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
+
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -60,24 +68,20 @@ Future main() async {
     sound: true,
   );
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
 
     if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification!.body}');
       flutterLocalNotificationsPlugin.show(
-          message.notification.hashCode,
-          message.notification!.title,
-          message.notification!.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
-            
-            ),
+        message.notification.hashCode,
+        message.notification!.title,
+        message.notification!.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            channelDescription: channel.description,
           ),
-        );
+        ),
+      );
     }
   });
   AwesomeNotifications().initialize(null, [

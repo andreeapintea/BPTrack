@@ -96,7 +96,7 @@ class MedicationService {
         'days': days,
         'notification_id': notificationId,
       });
-      createMedsReminder(medication, days, time, notificationId);
+      await createMedsReminder(medication, days, time, notificationId);
     } on FirebaseException catch (e) {
       showSnackbar(context, e.message!);
     }
@@ -118,7 +118,7 @@ class MedicationService {
     required BuildContext context,
   }) async {
     try {
-      _firestoreInstance
+      await _firestoreInstance
           .collection('patients')
           .doc(patientUid)
           .collection('medication')
@@ -141,7 +141,7 @@ class MedicationService {
     required int notificationId,
   }) async {
     try {
-      _firestoreInstance
+      await _firestoreInstance
           .collection('patients')
           .doc(patientUid)
           .collection('medication')
@@ -167,7 +167,7 @@ class MedicationService {
     required BuildContext context,
   }) async {
     try {
-      _firestoreInstance
+      await _firestoreInstance
           .collection('patients')
           .doc(patientUid)
           .collection('medication')

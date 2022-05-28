@@ -33,7 +33,7 @@ class DoctorsService {
     required String doctorUid,
   }) async {
     try {
-      _firestoreInstance.collection('doctors').doc(doctorUid).update({
+      await _firestoreInstance.collection('doctors').doc(doctorUid).update({
         'token': token,
       });
     } on FirebaseException catch (e) {
@@ -57,7 +57,7 @@ class DoctorsService {
 
     if (snapshot == null || !snapshot.exists) {
       try {
-        _firestoreInstance
+        await _firestoreInstance
             .collection('doctors')
             .doc(_auth.currentUser?.uid)
             .set({

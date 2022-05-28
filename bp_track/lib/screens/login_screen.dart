@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -48,15 +49,16 @@ class _LoginBodyState extends State<LoginScreen> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Padding(
+                    Padding(
                       padding: const EdgeInsets.symmetric(vertical: 50),
                       child: Text(
                         "AUTENTIFICARE",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                          color: primary,
-                        ),
+                        style: GoogleFonts.montserrat(
+                                color: primary,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 24,
+                                letterSpacing: 0,
+                              ),
                       ),
                     ),
                     RoundedInputField(

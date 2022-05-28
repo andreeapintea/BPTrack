@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final _bpService = BPEntriesService();
 
@@ -45,21 +46,21 @@ class _PatientHomepageState extends State<PatientHomepage> {
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: Text("Permiteți notificări"),
-                  content: Text("Aplicația vrea să vă trimită notificări"),
+                  title: const Text("Permiteți notificări"),
+                  content: const Text("Aplicația vrea să vă trimită notificări"),
                   actions: [
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text("Nu")),
+                        child: const Text("Nu")),
                     TextButton(
                         onPressed: () {
                           AwesomeNotifications()
                               .requestPermissionToSendNotifications()
                               .then((_) => Navigator.pop(context));
                         },
-                        child: Text("OK"))
+                        child: const Text("OK"))
                   ],
                 ));
       }
@@ -89,14 +90,37 @@ class _PatientHomepageState extends State<PatientHomepage> {
                     } else {
                       var output = snapshot.data;
                       var prenume = output!["prenume"];
-                      return Text(
-                        "Bună\n${prenume}!",
-                        style: TextStyle(
+                      var hour = DateTime.now().hour;
+                      if (hour>=1 && hour <=12){
+                        return Text(
+                        "Bună dimineața,\n${prenume}!",
+                        style: GoogleFonts.montserrat(
                           fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1,
                         ),
                       );
+                      }
+                      else if (hour>=13 && hour <=16){
+                        return Text(
+                        "Bună ziua,\n${prenume}!",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1,
+                        ),
+                      );
+                      }
+                      else {
+                        return Text(
+                        "Bună seara,\n${prenume}!",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1,
+                        ),
+                      );
+                      }
                     }
                   },
                 )),
@@ -174,50 +198,63 @@ class _PatientHomepageState extends State<PatientHomepage> {
                               isCurved: true,
                             )
                           ],
-                        )),
+                        ),
+                        ),
                       ),
                     ));
               }),
-          Padding(padding: EdgeInsets.all(15)),
+          const Padding(padding: EdgeInsets.all(15)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(children: [
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.circle,
                     color: Colors.red,
                   ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                   Text(
                     "Sistolică",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: GoogleFonts.workSans(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 18,
+                                            letterSpacing: 0.5,
+                                          ),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.circle,
                     color: Colors.blue,
                   ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                   Text(
                     "Diastolică",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: GoogleFonts.workSans(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 18,
+                                            letterSpacing: 0.5,
+                                          ),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.circle,
                     color: Colors.green,
                   ),
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
                   Text(
                     "Puls",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: GoogleFonts.workSans(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 18,
+                                            letterSpacing: 0.5,
+                                          ),
                   ),
                 ],
               )
@@ -241,12 +278,17 @@ class _PatientHomepageState extends State<PatientHomepage> {
         context: context,
         builder: (context) => SingleChildScrollView(
               child: AlertDialog(
-                title: const Text(
+                title: Text(
                   "Introduceți valorile tensiunii",
-                  style: TextStyle(color: primary),
+                  style: GoogleFonts.montserrat(
+                    color: primary,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    letterSpacing: 0.15,
+                  ),
                 ),
                 content: SizedBox(
-                  height: size.height * 0.4,
+                  height: size.height * 0.3,
                   child: SingleChildScrollView(
                     child: Form(
                       key: _formKey,
@@ -254,10 +296,15 @@ class _PatientHomepageState extends State<PatientHomepage> {
                         children: [
                           TextFormField(
                             controller: _systolic,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 labelText: "Sistolic",
-                                labelStyle: TextStyle(color: secondaryColor),
-                                focusedBorder: OutlineInputBorder(
+                                labelStyle: GoogleFonts.workSans(
+                                  color: secondaryColor,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 13,
+                                  letterSpacing: 0.4,
+                                ),
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: secondaryColor, width: 2.0),
                                 )),
@@ -274,10 +321,15 @@ class _PatientHomepageState extends State<PatientHomepage> {
                           ),
                           TextFormField(
                             controller: _diastolic,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 labelText: "Diastolică",
-                                labelStyle: TextStyle(color: secondaryColor),
-                                focusedBorder: OutlineInputBorder(
+                                labelStyle: GoogleFonts.workSans(
+                                  color: secondaryColor,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 13,
+                                  letterSpacing: 0.4,
+                                ),
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: secondaryColor, width: 2.0),
                                 )),
@@ -297,10 +349,15 @@ class _PatientHomepageState extends State<PatientHomepage> {
                           ),
                           TextFormField(
                             controller: _pulse,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 labelText: "Puls",
-                                labelStyle: TextStyle(color: secondaryColor),
-                                focusedBorder: OutlineInputBorder(
+                                labelStyle: GoogleFonts.workSans(
+                                  color: secondaryColor,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 13,
+                                  letterSpacing: 0.4,
+                                ),
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: secondaryColor, width: 2.0),
                                 )),
@@ -328,9 +385,14 @@ class _PatientHomepageState extends State<PatientHomepage> {
                         _systolic.clear();
                         _pulse.clear();
                       },
-                      child: const Text(
+                      child: Text(
                         "CANCEL",
-                        style: TextStyle(color: primary),
+                        style: GoogleFonts.workSans(
+                          color: primary,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.25,
+
+                        ),
                       )),
                   TextButton(
                       onPressed: () {
@@ -346,9 +408,14 @@ class _PatientHomepageState extends State<PatientHomepage> {
                           _pulse.clear();
                         }
                       },
-                      child: const Text(
+                      child: Text(
                         "SUBMIT",
-                        style: TextStyle(color: primary),
+                        style: GoogleFonts.workSans(
+                          color: primary,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.25,
+
+                        ),
                       )),
                 ],
               ),

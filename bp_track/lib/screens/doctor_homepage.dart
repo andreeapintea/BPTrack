@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -22,7 +23,12 @@ class DoctorHomepageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
-        title: const Text("Pacienți"),
+        title: Text("Pacienți",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
@@ -68,10 +74,11 @@ class DoctorHomepageScreen extends StatelessWidget {
                                       Center(
                                         child: Text(
                                           "${patient['prenume'].toUpperCase()} ${patient['nume'].toUpperCase()}",
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                              color: onSurface),
+                                          style: GoogleFonts.workSans(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                                letterSpacing: 0.5,
+                              ),
                                         ),
                                       ),
                                     ],
@@ -87,7 +94,7 @@ class DoctorHomepageScreen extends StatelessWidget {
                                           },
                                           child: Chip(
                                               backgroundColor: surface,
-                                              shape: StadiumBorder(
+                                              shape: const StadiumBorder(
                                                   side: BorderSide(
                                                 color: secondaryColor,
                                               )),
@@ -100,13 +107,17 @@ class DoctorHomepageScreen extends StatelessWidget {
                                                     child: Icon(
                                                       Icons.phone,
                                                       color: secondaryColor,
+                                                      size: 13,
                                                     ),
                                                   ),
                                                   Text(
                                                     "${patient['phone']}",
-                                                    style: const TextStyle(
-                                                        fontSize: 17,
-                                                        color: secondaryColor),
+                                                    style: GoogleFonts.workSans(
+                                                      color: secondaryColor,
+                                                      fontWeight: FontWeight.normal,
+                                                      fontSize: 13,
+                                                      letterSpacing: 0.4,
+                                                    )
                                                   )
                                                 ],
                                               )),

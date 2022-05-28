@@ -3,6 +3,7 @@ import 'package:bp_track/services/patients_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final _patientsService = PatientsService();
 
@@ -14,7 +15,12 @@ class SelectDoctorScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
-        title: Text("Selectați doctorul"),
+        title: Text("Selectați doctorul",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),),
       ),
       body: Column(
         children: [
@@ -30,16 +36,19 @@ class SelectDoctorScreen extends StatelessWidget {
                   return ListView(
                     children: snapshot.data!.docs.map((doctor) {
                       return Center(
-                        child: ListTile(
-                          title: Text(
-                            "${doctor['prenume'].toUpperCase()} ${doctor['nume'].toUpperCase()}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                        child: Card(
+                          color: surface,
+                          child: ListTile(
+                            title: Text(
+                              "${doctor['prenume'].toUpperCase()} ${doctor['nume'].toUpperCase()}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            onTap: () {
+                              _selectDoctor(doctor.id, context);
+                            },
                           ),
-                          onTap: () {
-                            _selectDoctor(doctor.id, context);
-                          },
                         ),
                       );
                     }).toList(),

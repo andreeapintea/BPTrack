@@ -26,7 +26,12 @@ class _AccountScreenDoctorState extends State<AccountScreenDoctor> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: primary,
-        title: const Text("Profil"),
+        title: Text("Profil",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),),
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: FirebaseAuth.instance.currentUser != null ? FirebaseFirestore.instance
@@ -119,21 +124,26 @@ class _AccountScreenDoctorState extends State<AccountScreenDoctor> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
         child: TextButton(
-          onPressed: (){
+          onPressed: ()async {
             _doctorService.updateDoctorToken(
         token: "",
         context: context,
         doctorUid: FirebaseAuth.instance.currentUser!.uid);
-    FirebaseAuth.instance.signOut().then((value) {
+    await FirebaseAuth.instance.signOut().then((value) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => WelcomeScreen()),
           (Route<dynamic> route) => false);
     });
     showSnackbar(context, "V-ați deconectat cu succes");
           },
-          child: const Text(
+          child: Text(
             "DECONECTARE",
-            style: TextStyle(color: onPrimary),
+            style: GoogleFonts.workSans(
+              color: onPrimary,
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              letterSpacing: 1.25,
+            ),
           ),
           style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(

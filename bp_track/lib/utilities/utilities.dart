@@ -1,11 +1,23 @@
+import 'dart:io';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:bp_track/main.dart';
 import 'package:bp_track/models/searched_doctor.dart';
+import 'package:bp_track/services/bp_entries_service.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
+import 'package:csv/csv.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+final _bpService = BPEntriesService();
 
 int createUniqueId() {
   return DateTime.now().millisecondsSinceEpoch.remainder(10);
@@ -97,4 +109,53 @@ Future<List<SearchedDoctor>> getDoctors(
   } else {
     throw Exception("HOPA");
   }
+}
+
+void generateCsvFile(BuildContext context, String patientUid) async {
+  // Map<Permission, PermissionStatus> statuses = await [
+  //   Permission.storage,
+  // ].request();
+  var status = await Permission.storage.status;
+  if (!status.isGranted) {
+    await Permission.storage.request();
+  }
+  var associateEntries = await _bpService.getAssociateEntriesList(patientUid);
+  List<List<dynamic>> rows = [];
+  List<dynamic> row = [];
+  row.add("Nr.");
+  row.add("Sistolica");
+  row.add("Diastolica");
+  row.add("Puls");
+  row.add("Categorie");
+  row.add("Data");
+  rows.add(row);
+  associateEntries.forEach((element) {
+    List<dynamic> row = [];
+    row.add(element['Nr.']);
+    row.add(element['Sistolica']);
+    row.add(element['Diastolica']);
+    row.add(element['Puls']);
+    row.add(element['Categorie']);
+    row.add(element['Data']);
+    rows.add(row);
+  });
+
+  String csv = const ListToCsvConverter().convert(rows);
+  final String directory = (await getApplicationSupportDirectory()).path;
+  final path = "$directory/csv-${DateTime.now().microsecondsSinceEpoch}.csv";
+  File f = File(path);
+  f.writeAsString(csv);
+  showSnackbar(context, "Fișierul a fost creat");
+  await flutterLocalNotificationsPlugin.show(
+      0,
+      "Informațiile au fost exportate ca CSV!",
+      null,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          channel.id,
+          channel.name,
+          channelDescription: channel.description,
+        ),
+      ),
+      payload: path);
 }

@@ -20,7 +20,7 @@ class BPEntriesService {
   }) async {
     var category = getBloodPressureCategory(diastolic, systolic);
     try {
-      _firestoreInstance
+      await _firestoreInstance
           .collection('patients')
           .doc(_auth.currentUser?.uid)
           .collection('tracker_entries')
@@ -49,8 +49,10 @@ class BPEntriesService {
               .get();
           if (doctorSnapshot.data() != null &&
               !doctorSnapshot.data()!['token'].isEmpty) {
-            sendPushMessage("Tensiunea pacientului ${prenumePacient} ${numePacient} e foarte mare!",
-                "Tensiune mare", doctorSnapshot.data()!['token']);
+            sendPushMessage(
+                "Tensiunea pacientului ${prenumePacient} ${numePacient} e foarte mare!",
+                "Tensiune mare",
+                doctorSnapshot.data()!['token']);
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -117,6 +119,7 @@ class BPEntriesService {
         .collection('patients')
         .doc(patientUid)
         .collection('tracker_entries')
+        .orderBy('time', descending: true)
         .snapshots();
   }
 
@@ -149,5 +152,28 @@ class BPEntriesService {
     } catch (e) {
       //print("error push notification");
     }
+  }
+
+  Future<List<dynamic>> getAssociateEntriesList(String patientUid) async {
+    List<dynamic> list = [];
+    var entries = await _firestoreInstance
+        .collection('patients')
+        .doc(patientUid)
+        .collection('tracker_entries')
+        .orderBy('time', descending: true)
+        .get();
+    var count = 1;
+    entries.docs.forEach((element) {
+      list.add({
+        "Nr.": count,
+        "Sistolica": element['systolic'],
+        "Diastolica": element['diastolic'],
+        "Puls": element['pulse'],
+        "Categorie": element['category'],
+        "Data": (element['time'] as Timestamp).toDate(),
+      });
+      count++;
+    });
+    return list;
   }
 }

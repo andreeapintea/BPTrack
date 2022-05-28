@@ -14,6 +14,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final _medicationService = MedicationService();
 
@@ -72,7 +73,17 @@ class _MedicationScreenState extends State<MedicationScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
-        title: widget.isEdit ? Text("Modifică medicament") : Text("Adaugă medicament"),
+        title: widget.isEdit ? Text("Modifică medicament",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),) : Text("Adaugă medicament",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),),
       ),
       body: Form(
         key: _formKey,
@@ -88,14 +99,16 @@ class _MedicationScreenState extends State<MedicationScreen> {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 50),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 50),
                             child: Text(
                               "MEDICAMENT",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
-                                  color: primary),
+                              style: GoogleFonts.montserrat(
+                                color: primary,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 24,
+                                letterSpacing: 0,
+                              ),
                             ),
                           ),
                           RoundedInputField(
@@ -266,14 +279,16 @@ class _MedicationScreenState extends State<MedicationScreen> {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 50),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 50),
                             child: Text(
                               "MEDICAMENT",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25,
-                                  color: primary),
+                              style: GoogleFonts.montserrat(
+                                color: primary,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 24,
+                                letterSpacing: 0,
+                              ),
                             ),
                           ),
                           RoundedInputField(

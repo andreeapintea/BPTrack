@@ -2,6 +2,7 @@
     package="com.bptrack.bp_track">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <queries>
         <!-- If your app makes calls -->
         <intent>
@@ -42,5 +43,6 @@
             <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="high_importance_channel" />
+            
     </application>
 </manifest>

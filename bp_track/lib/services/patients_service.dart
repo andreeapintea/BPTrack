@@ -33,16 +33,10 @@ class PatientsService {
       required String doctorUid,
       required BuildContext context}) async {
     try {
-      _firestoreInstance.collection('patients').doc(patientUid).update({
+      await _firestoreInstance.collection('patients').doc(patientUid).update({
         'doctor_uid': doctorUid,
       });
-      _firestoreInstance
-          .collection('doctors')
-          .doc(doctorUid)
-          .collection('patients_doctors')
-          .add({
-        'patient_uid': patientUid,
-      });
+      
     } on FirebaseException catch (e) {
       showSnackbar(context, e.message!);
     }
@@ -65,7 +59,7 @@ class PatientsService {
 
     if (snapshot == null || !snapshot.exists) {
       try {
-        _firestoreInstance
+        await _firestoreInstance
             .collection('patients')
             .doc(_auth.currentUser?.uid)
             .set({

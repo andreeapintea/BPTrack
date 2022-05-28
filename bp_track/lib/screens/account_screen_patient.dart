@@ -12,6 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -39,7 +40,24 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: primary,
-        title: const Text("Profil"),
+        title: Text("Profil",
+        style: GoogleFonts.montserrat(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+          letterSpacing: 0.15,
+        ),),
+        actions: [
+          PopupMenuButton(itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                child: Text("Exportă ca CSV"),
+                onTap: () {
+                  generateCsvFile(context, FirebaseAuth.instance.currentUser!.uid);
+                },
+              )
+            ];
+          })
+        ],
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: FirebaseAuth.instance.currentUser != null
@@ -334,9 +352,14 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
                             });
                             showSnackbar(context, "V-ați deconectat cu succes");
                           },
-                          child: const Text(
+                          child: Text(
                             "DECONECTARE",
-                            style: TextStyle(color: onPrimary),
+                            style: GoogleFonts.workSans(
+              color: onPrimary,
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              letterSpacing: 1.25,
+            ),
                           ),
                           style: ButtonStyle(
                               padding: MaterialStateProperty.all<EdgeInsets>(

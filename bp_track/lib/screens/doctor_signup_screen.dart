@@ -14,6 +14,7 @@ import 'package:bp_track/widgets/common/text_field_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final _doctorsService = DoctorsService();
 
@@ -54,14 +55,16 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 25),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 50),
                       child: Text(
                         "ÎNREGISTRARE",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            color: primary),
+                        style: GoogleFonts.montserrat(
+                                color: primary,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 24,
+                                letterSpacing: 0,
+                              ),
                       ),
                     ),
                     RoundedInputField(
