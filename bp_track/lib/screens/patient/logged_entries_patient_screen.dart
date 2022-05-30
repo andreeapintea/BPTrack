@@ -65,7 +65,7 @@ class LoggedEntriesPatientScreen extends StatelessWidget {
                                   height: size.height * 0.007,
                                 ),
                                 Text(
-                                  "Sistolică: ${entry['systolic']} Diastolică: ${entry['diastolic']} Puls: ${entry['pulse']}",
+                                  "Sistolică: ${entry['systolic']} mmHg Diastolică: ${entry['diastolic']} mmHg Puls: ${entry['pulse']} bpm",
                                   style: GoogleFonts.workSans(
                                     fontWeight: FontWeight.normal,
                                     fontSize: 15,

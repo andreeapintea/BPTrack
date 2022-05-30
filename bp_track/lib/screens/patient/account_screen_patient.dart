@@ -235,9 +235,14 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
                                                   letterSpacing: 1.2,
                                                   color: Colors.red),
                                             ),
+        
                                           ],
                                           isRepeatingAnimation: false,
                                         ),
+                                        Text("mmHg",  style: GoogleFonts.workSans(
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.2,
+                                          ),)
                                       ],
                                     ),
                                     Column(
@@ -264,6 +269,10 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
                                           ],
                                           isRepeatingAnimation: false,
                                         ),
+                                        Text("mmHg",  style: GoogleFonts.workSans(
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.2,
+                                          ),)
                                       ],
                                     ),
                                     Column(
@@ -290,6 +299,10 @@ class _PatientSettingsScreenState extends State<PatientSettingsScreen> {
                                           ],
                                           isRepeatingAnimation: false,
                                         ),
+                                        Text("bpm",  style: GoogleFonts.workSans(
+                                            fontWeight: FontWeight.w500,
+                                            letterSpacing: 1.2,
+                                          ),)
                                         //         Text(avgPulse.toStringAsFixed(0),
                                         //         style: GoogleFonts.montserrat(
                                         //   fontSize: 25,
