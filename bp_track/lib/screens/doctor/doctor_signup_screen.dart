@@ -33,7 +33,6 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
   TextEditingController _confirmPassword = TextEditingController();
   TextEditingController _nume = TextEditingController();
   TextEditingController _prenume = TextEditingController();
-  TextEditingController _department = TextEditingController();
   TextEditingController _phone = TextEditingController();
   var _selectedCounty = counties[0];
   var _selectedDepartment = departments[0];
@@ -79,11 +78,6 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                       controller: _prenume,
                       validator: validateName,
                     ),
-                    // RoundedInputField(
-                    //   hintText: "Județ",
-                    //   icon: Icons.location_city,
-                    //   onChanged: (value) {},
-                    // ),
                     TextFieldContainer(
                       child: DropdownButtonFormField(
                         onChanged: (String? newValue) {
@@ -129,12 +123,6 @@ class _DoctorSignUpState extends State<DoctorSignUpScreen> {
                             border: InputBorder.none),
                       ),
                     ),
-                    // RoundedInputField(
-                    //   hintText: "Specialitate",
-                    //   icon: Icons.medical_services,
-                    //   onChanged: (value) {},
-                    //   controller: _department,
-                    // ),
                     RoundedInputField(
                       hintText: "Telefon",
                       icon: Icons.phone,

@@ -1,7 +1,5 @@
-import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/screens/doctor/bottom_nav_doctor_screen.dart';
 import 'package:bp_track/screens/patient/bottom_nav_patient_screen.dart';
-import 'package:bp_track/screens/login_screen.dart';
 import 'package:bp_track/screens/patient/patient_details_screen.dart';
 import 'package:bp_track/services/doctors_service.dart';
 import 'package:bp_track/services/medication_service.dart';
@@ -49,7 +47,12 @@ class FirebaseAuthMethods {
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {});
     } on FirebaseAuthException catch (e) {
-      showSnackbar(context, e.message!);
+      if (e.code == 'email-already-in-use') {
+        showSnackbar(context, "Un cont cu această adresă de email există deja");
+      }
+      else {
+        showSnackbar(context, e.message!);
+      }
     }
   }
 
@@ -109,47 +112,52 @@ class FirebaseAuthMethods {
   }) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      showSnackbar(context, e.message!);
-    }
-    bool _patientExists =
-        await _patientsService.checkPatientExists(_auth.currentUser!.uid);
-    bool _doctorExists =
-        await _doctorsService.checkDoctorExists(_auth.currentUser!.uid);
-    //bool _doctorExists = await _doctorsService.checkDoctorExists(_auth.currentUser!.uid);
-    if (_patientExists) {
-      // Navigator.push(context,
-      //             MaterialPageRoute(builder: (context) => PatientNavigation()));
-      _medicineService.createNotifications(_auth.currentUser!.uid);
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (context) => PatientNavigation(
-                    currentIndex: 0,
-                    patientUid: _auth.currentUser!.uid,
-                  )),
-          (Route<dynamic> route) => false);
-      showSnackbar(context, "Autentificat ca pacient");
-    } else if (!_patientExists && !_doctorExists) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
-          (Route<dynamic> route) => false);
-      showSnackbar(context, "Adăugați detaliile");
-    } else if (_doctorExists) {
-      var token = await FirebaseMessaging.instance.getToken();
-      if (token == null) {
-        token = "";
+      bool _patientExists =
+          await _patientsService.checkPatientExists(_auth.currentUser!.uid);
+      bool _doctorExists =
+          await _doctorsService.checkDoctorExists(_auth.currentUser!.uid);
+      if (_patientExists) {
+        _medicineService.createNotifications(_auth.currentUser!.uid);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => PatientNavigation(
+                      currentIndex: 0,
+                      patientUid: _auth.currentUser!.uid,
+                    )),
+            (Route<dynamic> route) => false);
+        showSnackbar(context, "Autentificat ca pacient");
+      } else if (!_patientExists && !_doctorExists) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => PatientDetailsScreen()),
+            (Route<dynamic> route) => false);
+        showSnackbar(context, "Adăugați detaliile");
+      } else if (_doctorExists) {
+        var token = await FirebaseMessaging.instance.getToken();
+        if (token == null) {
+          token = "";
+        }
+        _doctorsService.updateDoctorToken(
+            token: token, context: context, doctorUid: _auth.currentUser!.uid);
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => DoctorNavigation(
+                      doctorUid: _auth.currentUser!.uid,
+                    )),
+            (Route<dynamic> route) => false);
+        showSnackbar(context, "Autentificat ca doctor");
+      } else {
+        showSnackbar(context, "Eroare");
       }
-      _doctorsService.updateDoctorToken(
-          token: token, context: context, doctorUid: _auth.currentUser!.uid);
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-              builder: (context) => DoctorNavigation(
-                    doctorUid: _auth.currentUser!.uid,
-                  )),
-          (Route<dynamic> route) => false);
-      showSnackbar(context, "Autentificat ca doctor");
-    } else {
-      showSnackbar(context, "Eroare");
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        showSnackbar(context, "Utilizatorul nu există!");
+      } else if (e.code == "wrong-password") {
+        showSnackbar(context, "Parola este greșită!");
+      } else if (e.code == "invalid-email") {
+        showSnackbar(context, "Adresa de email nu este validă!");
+      } else {
+        showSnackbar(context, e.message!);
+      }
     }
   }
 }

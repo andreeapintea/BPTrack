@@ -1,20 +1,13 @@
 import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/screens/doctor/logged_entries_patient_doctor_screen.dart';
-import 'package:bp_track/screens/doctor/logged_entries_patient_doctor_screen.dart';
 import 'package:bp_track/screens/doctor/medication_list_doctor_screen.dart';
-import 'package:bp_track/screens/welcome_screen.dart';
-import 'package:bp_track/services/doctors_service.dart';
-import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_initicon/flutter_initicon.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-final _doctorService = DoctorsService();
 
 class DoctorHomepageScreen extends StatelessWidget {
   const DoctorHomepageScreen({Key? key}) : super(key: key);

@@ -6,9 +6,6 @@ import 'package:bp_track/models/searched_doctor.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:csv/csv.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +17,7 @@ import 'package:permission_handler/permission_handler.dart';
 final _bpService = BPEntriesService();
 
 int createUniqueId() {
-  return DateTime.now().millisecondsSinceEpoch.remainder(10);
+  return DateTime.now().millisecondsSinceEpoch.remainder(100000);
 }
 
 Future<void> createMedsReminder(
@@ -59,23 +56,10 @@ Future<bool> checkDoctorExists(
     var doctors = await getDoctors(nume, prenume, department, county);
     bool found = false;
     doctors.forEach((element) {
-      if (element != null && element.specializare != null) {
-        // var eNume = element.nume!
-        //     .replaceAll('Ă', 'A')
-        //     .replaceAll('Â', 'A')
-        //     .replaceAll('Î', 'I')
-        //     .replaceAll('Ș', 'S')
-        //     .replaceAll('Ț', 'T');
-        // var ePrenume = element.prenume!
-        //     .replaceAll('Ă', 'A')
-        //     .replaceAll('Â', 'A')
-        //     .replaceAll('Î', 'I')
-        //     .replaceAll('Ș', 'S')
-        //     .replaceAll('Ț', 'T');
+      if (element.specializare != null) {
         if (element.nume == nume.toUpperCase() &&
             element.prenume == prenume.toUpperCase() &&
-            element.county == county &&
-            element.specializare != null) {
+            element.county == county) {
           bool dep = false;
           element.specializare!.forEach((e) {
             if (e != null && e.name == department) {
@@ -105,14 +89,11 @@ Future<List<SearchedDoctor>> getDoctors(
         .map((doctor) => SearchedDoctor.fromJson(doctor))
         .toList();
   } else {
-    throw Exception("HOPA");
+    throw Exception("Not found");
   }
 }
 
 void generateCsvFile(BuildContext context, String patientUid) async {
-  // Map<Permission, PermissionStatus> statuses = await [
-  //   Permission.storage,
-  // ].request();
   var status = await Permission.storage.status;
   if (!status.isGranted) {
     await Permission.storage.request();

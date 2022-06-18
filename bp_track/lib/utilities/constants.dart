@@ -21,6 +21,9 @@ const surface = Color(0xFFf4dddb);
 const onSurface = Color(0xFF534341);
 const outline = Color(0xFF857371);
 
+const MESSAGING_KEY =
+    'key=AAAAAmUHypM:APA91bE5vTtC3ZfIjP1y6SMGNUPLD2nP-t1SS2sc-C8iBcd8kayHRkXPhPlvsCy_sATzLcolYHH99Tk499Vz3NRyld4NSMfluho1CtQ2roZQFGtGzIwmPTgFev0zQsMlyLmFraKQJn9H';
+
 const counties = [
   "București",
   "Alba",
@@ -74,7 +77,7 @@ const departments = [
   "BOLI INFECȚIOASE",
   "CARDIOLOGIE",
   "CARDIOLOGIE PEDIATRICĂ"
-  "CHIRURGIE CARDIOVASCULARĂ",
+      "CHIRURGIE CARDIOVASCULARĂ",
   "CHIRURGIE GENERALĂ",
   "CHIRURGIE ORALĂ ȘI MAXILO-FACIALĂ",
   "CHIRURGIE ȘI ORTOPEDIE PEDIATRICĂ",

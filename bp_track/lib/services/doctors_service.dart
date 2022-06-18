@@ -74,9 +74,6 @@ class DoctorsService {
       } on FirebaseException catch (e) {
         showSnackbar(context, e.message!);
       }
-      // Navigator.push(context,
-      //     MaterialPageRoute(builder: (context) => PatientNavigation(currentIndex: 0,
-      //     patientUid: _auth.currentUser!.uid,)));
       showSnackbar(context, "Infomațiile au fost adăugate!");
     }
   }

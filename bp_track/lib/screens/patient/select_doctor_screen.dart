@@ -15,7 +15,7 @@ class SelectDoctorScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
-        title: Text("Selectați doctorul",
+        title: Text("Selectați medicul",
         style: GoogleFonts.montserrat(
           fontWeight: FontWeight.w500,
           fontSize: 20,

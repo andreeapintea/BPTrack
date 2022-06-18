@@ -53,7 +53,7 @@ class AccountTypeBody extends StatelessWidget {
                      ),
                  ),
                ),
-               Text("Doctor",
+               Text("Medic",
                style: GoogleFonts.workSans(
                  color: secondaryColor,
                  fontWeight: FontWeight.normal,

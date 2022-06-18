@@ -4,17 +4,7 @@ import 'package:bp_track/screens/patient/account_screen_patient.dart';
 import 'package:bp_track/screens/patient/homepage_patient_screen.dart';
 import 'package:bp_track/screens/patient/logged_entries_patient_screen.dart';
 import 'package:bp_track/screens/patient/medication_list_screen.dart';
-import 'package:bp_track/screens/patient/medication_screen.dart';
-import 'package:bp_track/screens/patient/logged_entries_patient_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-const TextStyle _textStyle = TextStyle(
-  fontSize: 40,
-  fontWeight: FontWeight.bold,
-  letterSpacing: 2,
-  fontStyle: FontStyle.italic,
-);
 
 class PatientNavigation extends StatefulWidget {
   int currentIndex;

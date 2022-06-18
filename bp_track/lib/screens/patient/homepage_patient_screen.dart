@@ -1,12 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bp_track/utilities/constants.dart';
-import 'package:bp_track/models/logged_entry.dart';
-import 'package:bp_track/screens/welcome_screen.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
-import 'package:bp_track/services/medication_service.dart';
-import 'package:bp_track/services/patients_service.dart';
-import 'package:bp_track/utilities/utilities.dart';
-import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -296,8 +290,9 @@ class _PatientHomepageState extends State<PatientHomepage> {
                         children: [
                           TextFormField(
                             controller: _systolic,
+                            maxLines: null,
                             decoration: InputDecoration(
-                                labelText: "Sistolic",
+                                labelText: "Sistolică",
                                 labelStyle: GoogleFonts.workSans(
                                   color: secondaryColor,
                                   fontWeight: FontWeight.normal,
@@ -321,6 +316,7 @@ class _PatientHomepageState extends State<PatientHomepage> {
                           ),
                           TextFormField(
                             controller: _diastolic,
+                            maxLines: null,
                             decoration: InputDecoration(
                                 labelText: "Diastolică",
                                 labelStyle: GoogleFonts.workSans(
@@ -341,7 +337,7 @@ class _PatientHomepageState extends State<PatientHomepage> {
                                 return "Valoarea poate fi doar numerică";
                               } else if ((int.parse(value)) >=
                                   (int.parse(_systolic.text))) {
-                                return "Valoarea tensiunii diastolică nu poate fi mai mare decât cea sistolică!";
+                                return "Diastolica nu poate fi mai mare decât sistolica!";
                               } else {
                                 return null;
                               }
@@ -349,6 +345,7 @@ class _PatientHomepageState extends State<PatientHomepage> {
                           ),
                           TextFormField(
                             controller: _pulse,
+                            maxLines: null,
                             decoration: InputDecoration(
                                 labelText: "Puls",
                                 labelStyle: GoogleFonts.workSans(
@@ -386,7 +383,7 @@ class _PatientHomepageState extends State<PatientHomepage> {
                         _pulse.clear();
                       },
                       child: Text(
-                        "CANCEL",
+                        "RENUNȚĂ",
                         style: GoogleFonts.workSans(
                           color: primary,
                           fontWeight: FontWeight.w500,
@@ -409,7 +406,7 @@ class _PatientHomepageState extends State<PatientHomepage> {
                         }
                       },
                       child: Text(
-                        "SUBMIT",
+                        "ADAUGĂ",
                         style: GoogleFonts.workSans(
                           color: primary,
                           fontWeight: FontWeight.w500,

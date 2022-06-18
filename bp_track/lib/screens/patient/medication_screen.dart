@@ -1,19 +1,11 @@
 import 'package:bp_track/utilities/constants.dart';
-import 'package:bp_track/screens/login_screen.dart';
-import 'package:bp_track/services/firebase_auth_methods.dart';
 import 'package:bp_track/services/medication_service.dart';
 import 'package:bp_track/services/patients_service.dart';
 import 'package:bp_track/utilities/validators.dart';
-import 'package:bp_track/widgets/common/already_have_account.dart';
-import 'package:bp_track/widgets/common/or_divider.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';
-import 'package:bp_track/widgets/common/rounded_password_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final _medicationService = MedicationService();
@@ -73,17 +65,23 @@ class _MedicationScreenState extends State<MedicationScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
-        title: widget.isEdit ? Text("Modifică medicament",
-        style: GoogleFonts.montserrat(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-          letterSpacing: 0.15,
-        ),) : Text("Adaugă medicament",
-        style: GoogleFonts.montserrat(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-          letterSpacing: 0.15,
-        ),),
+        title: widget.isEdit
+            ? Text(
+                "Modifică medicament",
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                  letterSpacing: 0.15,
+                ),
+              )
+            : Text(
+                "Adaugă medicament",
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                  letterSpacing: 0.15,
+                ),
+              ),
       ),
       body: Form(
         key: _formKey,
@@ -141,7 +139,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                             child: Row(
                               children: [
                                 FilterChip(
-                                  label: Text("LU"),
+                                  label: const Text("LU"),
                                   selected: widget.mon,
                                   onSelected: (value) {
                                     widget.mon = value;
@@ -156,7 +154,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("MA"),
+                                  label: const Text("MA"),
                                   selected: widget.tue,
                                   onSelected: (value) {
                                     widget.tue = value;
@@ -171,7 +169,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("MI"),
+                                  label: const Text("MI"),
                                   selected: widget.wed,
                                   onSelected: (value) {
                                     widget.wed = value;
@@ -186,7 +184,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("JO"),
+                                  label: const Text("JO"),
                                   selected: widget.thu,
                                   onSelected: (value) {
                                     widget.thu = value;
@@ -201,7 +199,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("VI"),
+                                  label: const Text("VI"),
                                   selected: widget.fri,
                                   onSelected: (value) {
                                     widget.fri = value;
@@ -216,7 +214,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("SA"),
+                                  label: const Text("SA"),
                                   selected: widget.sat,
                                   onSelected: (value) {
                                     widget.sat = value;
@@ -231,7 +229,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("DU"),
+                                  label: const Text("DU"),
                                   selected: widget.sun,
                                   onSelected: (value) {
                                     widget.sun = value;
@@ -321,7 +319,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                             child: Row(
                               children: [
                                 FilterChip(
-                                  label: Text("LU"),
+                                  label: const Text("LU"),
                                   selected: widget.mon,
                                   onSelected: (value) {
                                     widget.mon = value;
@@ -336,7 +334,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("MA"),
+                                  label: const Text("MA"),
                                   selected: widget.tue,
                                   onSelected: (value) {
                                     widget.tue = value;
@@ -351,7 +349,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("MI"),
+                                  label: const Text("MI"),
                                   selected: widget.wed,
                                   onSelected: (value) {
                                     widget.wed = value;
@@ -366,7 +364,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("JO"),
+                                  label: const Text("JO"),
                                   selected: widget.thu,
                                   onSelected: (value) {
                                     widget.thu = value;
@@ -381,7 +379,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("VI"),
+                                  label: const Text("VI"),
                                   selected: widget.fri,
                                   onSelected: (value) {
                                     widget.fri = value;
@@ -396,7 +394,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("SA"),
+                                  label: const Text("SA"),
                                   selected: widget.sat,
                                   onSelected: (value) {
                                     widget.sat = value;
@@ -411,7 +409,7 @@ class _MedicationScreenState extends State<MedicationScreen> {
                                   showCheckmark: false,
                                 ),
                                 FilterChip(
-                                  label: Text("DU"),
+                                  label: const Text("DU"),
                                   selected: widget.sun,
                                   onSelected: (value) {
                                     widget.sun = value;
@@ -514,8 +512,9 @@ class _MedicationScreenState extends State<MedicationScreen> {
         _medication.text = medication.data()!['medication'];
         _time.text = medication.data()!['time'];
         notificationId = medication.data()!['notification_id'];
-        if (medication.data()!['details'] != null)
+        if (medication.data()!['details'] != null) {
           _details.text = medication.data()!['details'];
+        }
         List selectedDays = medication.data()!['days'];
         if (selectedDays.contains("MON")) {
           widget.mon = true;

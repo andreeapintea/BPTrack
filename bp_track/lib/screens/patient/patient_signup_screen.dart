@@ -7,7 +7,6 @@ import 'package:bp_track/widgets/common/or_divider.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';
 import 'package:bp_track/widgets/common/rounded_password_field.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
@@ -65,28 +64,6 @@ class _PatientSignUpState extends State<PatientSignUpScreen> {
                               ),
                       ),
                     ),
-                    // RoundedInputField(
-                    //   hintText: "Nume",
-                    //   onChanged: (value) {},
-                    // ),
-                    // RoundedInputField(
-                    //   hintText: "Prenume",
-                    //   onChanged: (value) {},
-                    // ),
-                    // RoundedInputField(
-                    //   hintText: "CNP",
-                    //   onChanged: (value) {},
-                    // ),
-                    // RoundedInputField(
-                    //   hintText: "Data nașterii",
-                    //   icon: Icons.calendar_month,
-                    //   controller: dob,
-                    //   onChanged: (value) {},
-                    //   tap: () {
-                    //     FocusScope.of(context).requestFocus(new FocusNode());
-                    //     _selectDate(context);
-                    //   },
-                    // ),
                     RoundedInputField(
                       hintText: "Email",
                       icon: Icons.email,

@@ -29,8 +29,12 @@ class RoundedInputField extends StatelessWidget {
     return TextFieldContainer(
       child: TextFormField(
         onChanged: onChanged,
+        maxLines: null,
         decoration: InputDecoration(
-            hintText: hintText,
+            labelText: hintText,
+            labelStyle: GoogleFonts.workSans(
+              color: onPrimaryContainer,
+            ),
             icon: Icon(
               icon,
               color: onPrimaryContainer,

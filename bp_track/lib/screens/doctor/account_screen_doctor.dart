@@ -2,7 +2,6 @@ import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/screens/welcome_screen.dart';
 import 'package:bp_track/services/doctors_service.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
-import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +80,7 @@ class _AccountScreenDoctorState extends State<AccountScreenDoctor> {
                                   null
                               ? NetworkImage(
                                   FirebaseAuth.instance.currentUser!.photoURL!)
-                              : AssetImage('assets/images/placeholder.png')
+                              : const AssetImage('assets/images/placeholder.png')
                                   as ImageProvider,
                         ),
                       ),

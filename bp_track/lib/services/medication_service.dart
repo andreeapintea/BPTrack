@@ -1,5 +1,4 @@
 import 'package:bp_track/screens/patient/bottom_nav_patient_screen.dart';
-import 'package:bp_track/screens/patient/medication_list_screen.dart';
 import 'package:bp_track/utilities/utilities.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

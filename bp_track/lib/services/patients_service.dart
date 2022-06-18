@@ -16,7 +16,7 @@ class PatientsService {
     return snapshot;
   }
 
-  Future<bool> checkPatientExists(String uid) async {
+  Future<bool> checkPatientExists(String? uid) async {
     final snapshot = await _firestoreInstance
         .collection('patients')
         .doc(_auth.currentUser?.uid)
@@ -24,8 +24,9 @@ class PatientsService {
 
     if (snapshot == null || !snapshot.exists) {
       return false;
-    } else
+    } else {
       return true;
+    }
   }
 
   void addDoctorToPatient(
@@ -36,7 +37,6 @@ class PatientsService {
       await _firestoreInstance.collection('patients').doc(patientUid).update({
         'doctor_uid': doctorUid,
       });
-      
     } on FirebaseException catch (e) {
       showSnackbar(context, e.message!);
     }

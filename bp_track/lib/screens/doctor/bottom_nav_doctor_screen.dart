@@ -1,22 +1,7 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/screens/doctor/account_screen_doctor.dart';
-import 'package:bp_track/screens/doctor/account_screen_doctor.dart';
-import 'package:bp_track/screens/doctor/account_screen_doctor.dart';
 import 'package:bp_track/screens/doctor/doctor_homepage.dart';
-import 'package:bp_track/screens/patient/homepage_patient_screen.dart';
-import 'package:bp_track/screens/patient/logged_entries_patient_screen.dart';
-import 'package:bp_track/screens/patient/medication_list_screen.dart';
-import 'package:bp_track/screens/patient/medication_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-const TextStyle _textStyle = TextStyle(
-  fontSize: 40,
-  fontWeight: FontWeight.bold,
-  letterSpacing: 2,
-  fontStyle: FontStyle.italic,
-);
 
 class DoctorNavigation extends StatefulWidget {
   int currentIndex;

@@ -19,7 +19,10 @@ class RoundedPasswordInput extends StatelessWidget {
       child: TextFormField(
         obscureText: true,
         decoration: InputDecoration(
-          hintText: hintText,
+          labelText: hintText,
+            labelStyle: GoogleFonts.workSans(
+              color: onPrimaryContainer,
+            ),
           icon: const Icon(
             Icons.lock,
             color: onPrimaryContainer,

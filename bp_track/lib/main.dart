@@ -83,7 +83,7 @@ Future main() async {
       );
     }
   });
-  AwesomeNotifications().initialize(null, [
+  AwesomeNotifications().initialize('resource://mipmap/notification_icon', [
     NotificationChannel(
       channelKey: 'scheduled_channel',
       channelName: 'Scheduled Notifications',

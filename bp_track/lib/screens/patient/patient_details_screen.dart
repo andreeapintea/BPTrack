@@ -1,17 +1,9 @@
 import 'package:bp_track/utilities/constants.dart';
-import 'package:bp_track/screens/login_screen.dart';
-import 'package:bp_track/services/firebase_auth_methods.dart';
 import 'package:bp_track/services/patients_service.dart';
 import 'package:bp_track/utilities/validators.dart';
-import 'package:bp_track/widgets/common/already_have_account.dart';
-import 'package:bp_track/widgets/common/or_divider.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';
-import 'package:bp_track/widgets/common/rounded_password_field.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PatientDetailsScreen extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bp_track/screens/patient/bottom_nav_patient_screen.dart';
+import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/utilities/show_snackbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -95,24 +96,24 @@ class BPEntriesService {
   }
 
   String getBloodPressureCategory(int diastolic, int systolic) {
-    if (systolic < 120 && diastolic < 80) {
-      return "optimal";
-    } else if ((120 <= systolic && systolic < 130) ||
-        (80 <= diastolic && diastolic < 85)) {
-      return "normal";
-    } else if ((130 <= systolic && systolic < 140) ||
-        (85 <= diastolic && diastolic < 90)) {
-      return "high";
-    } else if ((140 <= systolic && systolic < 160) ||
-        (90 <= diastolic && diastolic < 100)) {
-      return "stage1";
+    if (systolic >= 180 || diastolic >= 110) {
+      return 'stage3';
     } else if ((160 <= systolic && systolic < 180) ||
         (100 <= diastolic && diastolic < 110)) {
-      return "stage2";
-    } else if (systolic >= 180 || diastolic >= 110) {
-      return "stage3";
+      return 'stage2';
+    } else if ((140 <= systolic && systolic < 160) ||
+        (90 <= diastolic && diastolic < 100)) {
+      return 'stage1';
+    } else if ((130 <= systolic && systolic < 140) ||
+        (85 <= diastolic && diastolic < 90)) {
+      return 'high';
+    } else if ((120 <= systolic && systolic < 130) ||
+        (80 <= diastolic && diastolic < 85)) {
+      return 'normal';
+    } else if (systolic < 120 && diastolic < 80) {
+      return 'optimal';
     } else {
-      return "error";
+      return 'error';
     }
   }
 
@@ -131,8 +132,7 @@ class BPEntriesService {
         Uri.parse('https://fcm.googleapis.com/fcm/send'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization':
-              'key=AAAAAmUHypM:APA91bE5vTtC3ZfIjP1y6SMGNUPLD2nP-t1SS2sc-C8iBcd8kayHRkXPhPlvsCy_sATzLcolYHH99Tk499Vz3NRyld4NSMfluho1CtQ2roZQFGtGzIwmPTgFev0zQsMlyLmFraKQJn9H',
+          'Authorization': MESSAGING_KEY,
         },
         body: jsonEncode(
           <String, dynamic>{
@@ -151,6 +151,7 @@ class BPEntriesService {
         ),
       );
     } catch (e) {
+      print(e);
     }
   }
 

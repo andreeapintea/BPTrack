@@ -1,19 +1,10 @@
 import 'package:bp_track/utilities/constants.dart';
-import 'package:bp_track/screens/login_screen.dart';
-import 'package:bp_track/services/firebase_auth_methods.dart';
 import 'package:bp_track/services/medication_service.dart';
-import 'package:bp_track/services/patients_service.dart';
 import 'package:bp_track/utilities/validators.dart';
-import 'package:bp_track/widgets/common/already_have_account.dart';
-import 'package:bp_track/widgets/common/or_divider.dart';
 import 'package:bp_track/widgets/common/rounded_button.dart';
 import 'package:bp_track/widgets/common/rounded_input_field.dart';
-import 'package:bp_track/widgets/common/rounded_password_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final _medicationService = MedicationService();
@@ -60,17 +51,23 @@ class _MedicationScreenDoctorState extends State<MedicationScreenDoctor> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
-        title: widget.isEdit ? Text("Modifică medicament",
-        style: GoogleFonts.montserrat(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-          letterSpacing: 0.15,
-        ),) : Text("Adaugă medicament",
-        style: GoogleFonts.montserrat(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-          letterSpacing: 0.15,
-        ),),
+        title: widget.isEdit
+            ? Text(
+                "Modifică medicament",
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                  letterSpacing: 0.15,
+                ),
+              )
+            : Text(
+                "Adaugă medicament",
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20,
+                  letterSpacing: 0.15,
+                ),
+              ),
       ),
       body: Form(
         key: _formKey,
@@ -206,10 +203,10 @@ class _MedicationScreenDoctorState extends State<MedicationScreenDoctor> {
 
   void _deleteMedication() {
     _medicationService.deleteMedicationDoctor(
-        patientUid: widget.patientUid,
-        docId: widget.documentId!,
-        context: context,
-        );
+      patientUid: widget.patientUid,
+      docId: widget.documentId!,
+      context: context,
+    );
   }
 
   _setFields(String patientUid, String docId) async {
@@ -223,8 +220,9 @@ class _MedicationScreenDoctorState extends State<MedicationScreenDoctor> {
     if (medication.exists) {
       setState(() {
         _medication.text = medication.data()!['medication'];
-        if (medication.data()!['details'] != null)
+        if (medication.data()!['details'] != null) {
           _details.text = medication.data()!['details'];
+        }
       });
     }
   }

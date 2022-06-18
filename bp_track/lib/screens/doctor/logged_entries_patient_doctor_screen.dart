@@ -1,11 +1,8 @@
 import 'package:bp_track/utilities/constants.dart';
 import 'package:bp_track/services/bp_entries_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 final _bpService = BPEntriesService();
 
@@ -19,7 +16,7 @@ class LoggedEntriesDoctorScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Valori logate",
+        title: Text("Valori salvate",
         style: GoogleFonts.montserrat(
           fontWeight: FontWeight.w500,
           fontSize: 20,
@@ -85,7 +82,7 @@ class LoggedEntriesDoctorScreen extends StatelessWidget {
                                     ),
                                   ),
                                   backgroundColor: tileColor,
-                                  shape: StadiumBorder(
+                                  shape: const StadiumBorder(
                                       side: BorderSide(
                                     color: onSurface,
                                   )),
