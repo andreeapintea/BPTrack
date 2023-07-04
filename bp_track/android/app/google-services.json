@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "10284944019-qvgrjfa27ja11n4l56jiccml3lt6morg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bptrack.bp_track",
+            "certificate_hash": "b5df734dca97aeb22c23c0829c1eb3c85977d48d"
+          }
+        },
+        {
           "client_id": "10284944019-mi8ac3pg0ns4k0s2ea6n63tmd8s23db8.apps.googleusercontent.com",
           "client_type": 3
         }

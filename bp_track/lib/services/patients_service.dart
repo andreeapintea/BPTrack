@@ -29,6 +29,18 @@ class PatientsService {
     }
   }
 
+  Future<MapEntry<int, int>> getLimits({required String? patientUid}) async {
+    final patient = await _firestoreInstance
+          .collection('patients')
+          .doc(patientUid)
+          .get();
+    if (patient.data() != null)
+    {
+      return MapEntry(patient.data()!['systolic_limit'], patient.data()!['diastolic_limit']);
+    }
+    return const MapEntry(0, 0);
+  }
+
   void addDoctorToPatient(
       {required String patientUid,
       required String doctorUid,
@@ -43,6 +55,22 @@ class PatientsService {
     Navigator.pop(context);
     showSnackbar(context, 'Doctorul a fost selectat!');
   }
+
+  void addBPLimitsToPatient(
+    {required String patientUid,
+    required int systolicLimit,
+    required int diastolicLimit,
+    required BuildContext context}) async {
+
+      try {
+        await _firestoreInstance.collection('patients').doc(patientUid).update({
+          'systolic_limit': systolicLimit,
+          'diastolic_limit': diastolicLimit,
+        });
+      } on FirebaseException catch (e) {
+        showSnackbar(context, e.message!);
+      }
+    }
 
   void addPatient({
     required String nume,
@@ -70,6 +98,8 @@ class PatientsService {
           'role': "patient",
           'phone': phone,
           'doctor_uid': null,
+          'diastolic_limit': 0,
+          'systolic_limit': 0,
         });
       } on FirebaseException catch (e) {
         showSnackbar(context, e.message!);

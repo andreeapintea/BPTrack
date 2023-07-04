@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:bp_track/screens/patient/bottom_nav_patient_screen.dart';
@@ -35,22 +37,63 @@ class BPEntriesService {
     } on FirebaseException catch (e) {
       showSnackbar(context, e.message!);
     }
-    if (category == 'stage3') {
-      var patientSnapshot = await _firestoreInstance
+
+    var patientSnapshot = await _firestoreInstance
           .collection('patients')
           .doc(_auth.currentUser?.uid)
           .get();
-      if (patientSnapshot.data() != null) {
-        var numePacient = patientSnapshot.data()!['nume'];
-        var prenumePacient = patientSnapshot.data()!['prenume'];
-        if (patientSnapshot.data()!['doctor_uid'] != null) {
-          var doctorSnapshot = await _firestoreInstance
+
+    if (patientSnapshot.data() != null)
+    {
+      var systolicLimit = patientSnapshot.data()!['systolic_limit'];
+      var diastolicLimit = patientSnapshot.data()!['diastolic_limt'];
+      if (systolicLimit != 0 && diastolicLimit != 0)
+      {
+        if (systolic > systolicLimit || diastolic > diastolicLimit)
+        {
+          _notifyDoctor(patientSnapshot, context);
+        }
+      }
+      else if (category == 'stage3')
+      {
+        _notifyDoctor(patientSnapshot, context);
+      }
+      else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PatientNavigation(
+                    currentIndex: 0,
+                    patientUid: _auth.currentUser!.uid,
+                  )));
+      showSnackbar(context, "Infomațiile au fost adăugate!");
+      }
+    }
+    else
+    {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PatientNavigation(
+                    currentIndex: 0,
+                    patientUid: _auth.currentUser!.uid,
+                  )));
+      showSnackbar(context, "Nu s-a putut gasi pacientul");
+    }
+  }
+
+  
+  void _notifyDoctor(DocumentSnapshot<Map<String, dynamic>> patientSnapshot, BuildContext context) async {
+    var numePacient = patientSnapshot.data()!['nume'];
+    var prenumePacient = patientSnapshot.data()!['prenume'];
+    if (patientSnapshot.data()!['doctor_uid'] != null) {
+      var doctorSnapshot = await _firestoreInstance
               .collection('doctors')
               .doc(patientSnapshot.data()!['doctor_uid'])
               .get();
-          if (doctorSnapshot.data() != null &&
+      if (doctorSnapshot.data() != null &&
               !doctorSnapshot.data()!['token'].isEmpty) {
-            sendPushMessage(
+                sendPushMessage(
                 "Tensiunea pacientului ${prenumePacient} ${numePacient} e foarte mare!",
                 "Tensiune mare",
                 doctorSnapshot.data()!['token']);
@@ -62,8 +105,10 @@ class BPEntriesService {
                           patientUid: _auth.currentUser!.uid,
                         )));
             showSnackbar(context, "Tensiune mare! Doctorul a fost alertat!");
-          } else {
-            Navigator.push(
+              }
+              else
+              {
+                Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => PatientNavigation(
@@ -71,9 +116,11 @@ class BPEntriesService {
                           patientUid: _auth.currentUser!.uid,
                         )));
             showSnackbar(context, "Atenție! Tensiunea ta este foarte mare!");
-          }
-        } else {
-          Navigator.push(
+              }
+    }
+    else
+    {
+      Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => PatientNavigation(
@@ -81,20 +128,9 @@ class BPEntriesService {
                         patientUid: _auth.currentUser!.uid,
                       )));
           showSnackbar(context, "Atenție! Tensiunea ta este foarte mare!");
-        }
-      }
-    } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => PatientNavigation(
-                    currentIndex: 0,
-                    patientUid: _auth.currentUser!.uid,
-                  )));
-      showSnackbar(context, "Infomațiile au fost adăugate!");
     }
   }
-
+  
   String getBloodPressureCategory(int diastolic, int systolic) {
     if (systolic >= 180 || diastolic >= 110) {
       return 'stage3';

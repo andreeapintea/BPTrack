@@ -24,6 +24,15 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
 
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse notificationResponse) {
+  final String? payload = notificationResponse.payload;
+    if (payload != null) {
+      OpenFile.open(payload);
+    }
+  // handle action
+}
+
 late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 Future main() async {
@@ -44,11 +53,11 @@ Future main() async {
     android: initializationSettingsAndroid,
   );
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String? payload) {
-    if (payload != null) {
-      OpenFile.open(payload);
-    }
-  });
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
+      onDidReceiveNotificationResponse: ((details) {
+        debugPrint('notification ${details.id}');
+      })
+      );
 
   /// Create an Android Notification Channel.
   ///
@@ -94,7 +103,7 @@ Future main() async {
     )
   ]);
   await Firebase.initializeApp();
-
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
